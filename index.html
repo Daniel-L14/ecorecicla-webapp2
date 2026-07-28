@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Eco-Bonus</title>
 
-    <!-- CONFIGURACIÓN DE ICONO PARA PANTALLA DE INICIO (IOS Y ANDROID) CON TU ARCHIVO LOCAL logo.png -->
-    <link rel="apple-touch-icon" sizes="180x180" href="logo.png?v=2">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png?v=2">
-    <link rel="shortcut icon" href="logo.png?v=2">
+    <!-- CONFIGURACIÓN DE ICONO PARA PANTALLA DE INICIO (IOS Y ANDROID) APUNTANDO A logo.jpg -->
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.jpg">
+    <link rel="icon" type="image/jpeg" sizes="32x32" href="logo.jpg">
+    <link rel="shortcut icon" href="logo.jpg">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -33,9 +33,9 @@
     <header id="main-header" class="hidden gradient-bg text-white p-5 rounded-b-3xl shadow-lg">
         <div class="flex justify-between items-center mb-3">
             <div class="flex items-center space-x-3">
-                <!-- LOGO EN EL HEADER SUPERIOR -->
+                <!-- LOGO EN EL HEADER SUPERIOR (logo.jpg) -->
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1 shadow overflow-hidden">
-                    <img src="logo.png?v=2" alt="Eco-Bonus Logo" class="w-full h-full object-contain">
+                    <img src="logo.jpg" alt="Eco-Bonus Logo" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <p class="text-xs text-emerald-100">Hola de nuevo,</p>
@@ -70,8 +70,8 @@
         <!-- 1. LOGIN -->
         <section id="screen-login" class="flex flex-col justify-center min-h-[80vh] space-y-4">
             <div class="text-center flex flex-col items-center">
-                <!-- LOGO PRINCIPAL EN EL LOGIN USANDO logo.png?v=2 -->
-                <img src="logo.png?v=2" alt="Eco-Bonus" class="w-56 h-auto mb-2 object-contain">
+                <!-- LOGO PRINCIPAL EN EL LOGIN (logo.jpg) -->
+                <img src="logo.jpg" alt="Eco-Bonus Logo" class="w-56 h-auto mb-2 object-contain">
             </div>
             <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
                 <div>
@@ -90,7 +90,7 @@
         <!-- 2. REGISTRO -->
         <section id="screen-register" class="hidden min-h-[80vh] flex flex-col justify-center space-y-4">
             <div class="text-center flex flex-col items-center">
-                <img src="logo.png?v=2" alt="Eco-Bonus" class="w-40 h-auto mb-1 object-contain">
+                <img src="logo.jpg" alt="Eco-Bonus Logo" class="w-40 h-auto mb-1 object-contain">
                 <h2 class="text-lg font-bold text-gray-800">Registro Eco-Bonus</h2>
                 <p class="text-xs text-gray-500">Regístrate para habilitar los contenedores de tu zona</p>
             </div>
@@ -98,9 +98,9 @@
                 <div>
                     <label class="text-[11px] font-bold text-gray-600 block mb-1">Tipo de Usuario / Entidad</label>
                     <select id="reg-type" class="w-full p-3 bg-gray-50 border rounded-xl text-xs font-bold text-gray-700 focus:outline-none focus:border-emerald-500">
-                        <option value="Persona Natural">Persona Natural</option>
-                        <option value="Empresa">Empresa / Negocio</option>
-                        <option value="Colegio (Básica y Primaria)">Colegio (Educación Básica y Primaria)</option>
+                        <option value="Persona Natural">👤 Persona Natural</option>
+                        <option value="Empresa">🏢 Empresa / Negocio</option>
+                        <option value="Colegio (Básica y Primaria)">🏫 Colegio (Educación Básica y Primaria)</option>
                     </select>
                 </div>
                 <div>
