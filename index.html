@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>EcoBonus App</title>
+    <title>RECICLA+IA</title>
+
+    <!-- CONFIGURACIÓN DE ICONO PARA LA PANTALLA DE INICIO EN CELULARES (IOS Y ANDROID) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="shortcut icon" href="logo.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Librería de lector de código QR por cámara -->
@@ -13,6 +19,10 @@
         .app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; background: #ffffff; position: relative; }
         .gradient-bg { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
         #reader video { width: 100% !important; border-radius: 1rem; object-fit: cover; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 1rem; }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        .chat-bubble-user { background-color: #10b981; color: white; border-radius: 1rem 1rem 0.2rem 1rem; }
+        .chat-bubble-ai { background-color: #f3f4f6; color: #1f2937; border-radius: 1rem 1rem 1rem 0.2rem; }
     </style>
 </head>
 <body class="bg-gray-100 antialiased">
@@ -23,12 +33,17 @@
     <header id="main-header" class="hidden gradient-bg text-white p-5 rounded-b-3xl shadow-lg">
         <div class="flex justify-between items-center mb-3">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 bg-white text-emerald-600 rounded-full flex items-center justify-center font-bold">
-                    <i class="fa-solid fa-user"></i>
+                <!-- LOGO EN EL HEADER SUPERIOR -->
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1 shadow overflow-hidden">
+                    <img src="logo.png" alt="RECICLA+IA Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=100&q=80';">
                 </div>
                 <div>
                     <p class="text-xs text-emerald-100">Hola de nuevo,</p>
-                    <h2 id="disp-username" class="text-base font-bold">Usuario EcoBonus</h2>
+                    <h2 id="disp-username" class="text-base font-bold leading-tight">Usuario RECICLA+IA</h2>
+                    <!-- TIPO DE ENTIDAD REGISTRADA EN COLOR BLANCO -->
+                    <span id="disp-user-type" class="inline-block bg-white/20 text-[10px] font-extrabold text-white px-2 py-0.5 rounded-md mt-0.5 border border-white/20">
+                        👤 Persona Natural
+                    </span>
                 </div>
             </div>
             <button onclick="logout()" class="text-white text-sm bg-emerald-700/50 p-2 rounded-full"><i class="fa-solid fa-right-from-bracket"></i></button>
@@ -36,7 +51,7 @@
         
         <!-- LOCALIDAD REGISTRADA -->
         <div class="flex items-center justify-between text-xs bg-emerald-800/40 px-3 py-1.5 rounded-xl mb-3 border border-white/10">
-            <span class="text-emerald-100"><i class="fa-solid fa-location-dot text-yellow-300"></i> Tu Localidad Registrada:</span>
+            <span class="text-emerald-100"><i class="fa-solid fa-location-dot text-yellow-300"></i> Localidad Registrada:</span>
             <span id="disp-location" class="font-bold text-white uppercase">Fontibón</span>
         </div>
 
@@ -55,10 +70,9 @@
 
         <!-- 1. LOGIN -->
         <section id="screen-login" class="flex flex-col justify-center min-h-[80vh] space-y-4">
-            <div class="text-center">
-                <i class="fa-solid fa-leaf text-5xl text-emerald-500 mb-2"></i>
-                <h1 class="text-3xl font-extrabold text-gray-800">EcoBonus</h1>
-                <p class="text-xs text-gray-500">Recicla en tu localidad y gana beneficios</p>
+            <div class="text-center flex flex-col items-center">
+                <img src="logo.png" alt="RECICLA+IA" class="w-48 h-auto mb-2 object-contain" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=300&q=80';">
+                <p class="text-xs text-gray-500 font-medium">Inteligencia • Participación • Sostenibilidad</p>
             </div>
             <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
                 <div>
@@ -76,17 +90,26 @@
 
         <!-- 2. REGISTRO -->
         <section id="screen-register" class="hidden min-h-[80vh] flex flex-col justify-center space-y-4">
-            <div class="text-center">
-                <h2 class="text-xl font-bold text-gray-800">Registro EcoBonus</h2>
+            <div class="text-center flex flex-col items-center">
+                <img src="logo.png" alt="RECICLA+IA" class="w-36 h-auto mb-1 object-contain" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=300&q=80';">
+                <h2 class="text-lg font-bold text-gray-800">Registro RECICLA+IA</h2>
                 <p class="text-xs text-gray-500">Regístrate para habilitar los contenedores de tu zona</p>
             </div>
             <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
                 <div>
-                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Nombre Completo</label>
-                    <input type="text" id="reg-name" placeholder="Ej: Maria Gonzalez" class="w-full p-3 bg-gray-50 border rounded-xl text-xs">
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Tipo de Usuario / Entidad</label>
+                    <select id="reg-type" class="w-full p-3 bg-gray-50 border rounded-xl text-xs font-bold text-gray-700 focus:outline-none focus:border-emerald-500">
+                        <option value="Persona Natural">👤 Persona Natural</option>
+                        <option value="Empresa">🏢 Empresa / Negocio</option>
+                        <option value="Colegio (Básica y Primaria)">🏫 Colegio (Educación Básica y Primaria)</option>
+                    </select>
                 </div>
                 <div>
-                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Localidad de Residencia</label>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Nombre Completo o Razón Social</label>
+                    <input type="text" id="reg-name" placeholder="Ej: Maria Gonzalez o Colegio San José" class="w-full p-3 bg-gray-50 border rounded-xl text-xs">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Localidad de Residencia o Ubicación</label>
                     <select id="reg-location" class="w-full p-3 bg-gray-50 border rounded-xl text-xs font-bold text-gray-700">
                         <option value="fontibon">Fontibón</option>
                         <option value="bosa">Bosa</option>
@@ -108,28 +131,168 @@
             <p class="text-center text-xs text-gray-500"><button onclick="showScreen('login')" class="text-emerald-600 font-bold underline">Volver al Login</button></p>
         </section>
 
-        <!-- 3. DASHBOARD -->
+        <!-- 3. INICIO / DASHBOARD CON APRENDIZAJE Y CHAT DE IA COMPLETO -->
         <section id="screen-dashboard" class="hidden space-y-5">
-            <h3 class="font-bold text-gray-800 text-sm">Tus Métricas de Reciclaje</h3>
-            <div class="grid grid-cols-3 gap-2 text-center">
-                <div class="bg-white p-3 rounded-xl border">
-                    <span class="text-xs text-gray-400 font-bold block">🥤 Plástico</span>
-                    <span id="stat-plastico" class="font-extrabold text-sm text-gray-800">12.5 Kg</span>
-                </div>
-                <div class="bg-white p-3 rounded-xl border">
-                    <span class="text-xs text-gray-400 font-bold block">📦 Cartón</span>
-                    <span id="stat-carton" class="font-extrabold text-sm text-gray-800">7.5 Kg</span>
-                </div>
-                <div class="bg-white p-3 rounded-xl border">
-                    <span class="text-xs text-gray-400 font-bold block">🍎 Orgánico</span>
-                    <span id="stat-organico" class="font-extrabold text-sm text-gray-800">5.0 Kg</span>
+            
+            <!-- BOTÓN DESTACADO DE ESCANEO -->
+            <div class="gradient-bg text-white p-5 rounded-2xl text-center space-y-2 shadow-md">
+                <h4 class="font-bold text-base">¿Listo para reciclar hoy?</h4>
+                <p class="text-xs text-emerald-100">Acércate a la báscula de tu sector y escanea el código QR para sumar tus kilos.</p>
+                <button onclick="showScreen('scanner')" class="bg-white text-emerald-700 font-extrabold px-5 py-3 rounded-xl text-xs mt-2 shadow-lg hover:bg-emerald-50 transition w-full">📷 Escanear QR en Báscula</button>
+            </div>
+
+            <!-- MÉTRICAS RÁPIDAS -->
+            <div>
+                <h3 class="font-bold text-gray-800 text-sm mb-2">Tus Métricas Recientes</h3>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="bg-white p-3 rounded-xl border shadow-sm">
+                        <span class="text-[10px] text-gray-400 font-bold block">🥤 Plástico</span>
+                        <span id="stat-plastico" class="font-extrabold text-sm text-gray-800">12.5 Kg</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl border shadow-sm">
+                        <span class="text-[10px] text-gray-400 font-bold block">📦 Cartón</span>
+                        <span id="stat-carton" class="font-extrabold text-sm text-gray-800">7.5 Kg</span>
+                    </div>
+                    <div class="bg-white p-3 rounded-xl border shadow-sm">
+                        <span class="text-[10px] text-gray-400 font-bold block">🍎 Orgánico</span>
+                        <span id="stat-organico" class="font-extrabold text-sm text-gray-800">5.0 Kg</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="gradient-bg text-white p-5 rounded-2xl text-center space-y-2 shadow-md">
-                <h4 class="font-bold">¿Tienes material para reciclar?</h4>
-                <p class="text-xs text-emerald-100">Acércate al contenedor de tu localidad y escanea su código QR con la cámara.</p>
-                <button onclick="showScreen('scanner')" class="bg-white text-emerald-700 font-bold px-4 py-2.5 rounded-xl text-xs mt-2 shadow">📷 Escanear QR en Báscula</button>
+            <!-- MÓDULO EDUCATIVO INTERACTIVO PRINCIPAL -->
+            <div class="space-y-4 pt-2">
+                <div class="border-b pb-2 flex justify-between items-end">
+                    <div>
+                        <span class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2.5 py-1 rounded-full uppercase">Guía de Aprendizaje Interactiva</span>
+                        <h3 class="font-extrabold text-gray-800 text-base mt-1">Aprende a Separar de Verdad 📚</h3>
+                    </div>
+                </div>
+
+                <!-- VIDEO EXPLICATIVO REPRODUCIBLE -->
+                <div class="bg-white p-3.5 rounded-2xl border shadow-sm space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h4 class="font-bold text-xs text-gray-800 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-circle-play text-red-500 text-sm"></i>
+                            <span>Video Educativo: Las 3 Erres y Separación</span>
+                        </h4>
+                        <a href="https://www.youtube.com/watch?v=EiKEpstqGuw" target="_blank" class="text-[10px] bg-red-100 text-red-700 font-bold px-2 py-1 rounded-lg">
+                            <i class="fa-brands fa-youtube"></i> Abrir App
+                        </a>
+                    </div>
+                    <p class="text-[11px] text-gray-500">Mira este video sobre cómo clasificar correctamente antes de ir a la báscula:</p>
+                    
+                    <div class="video-container shadow-inner bg-black rounded-xl overflow-hidden">
+                        <iframe src="https://www.youtube.com/embed/EiKEpstqGuw?rel=0&modestbranding=1" title="Aprende a Reciclar" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- GUÍA VISUAL ILUSTRADA CON IMÁGENES EN ALTA DEFINICIÓN -->
+                <div class="space-y-3">
+                    <h4 class="font-extrabold text-gray-800 text-xs uppercase tracking-wider">Código de Colores Ilustrado</h4>
+
+                    <!-- ⚪ CANECA / BOLSA BLANCA -->
+                    <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Reciclaje de Plástico y Vidrio" class="w-full h-32 object-cover">
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-extrabold text-gray-800 text-xs">⚪ Bolsa / Caneca Blanca</span>
+                                <span class="bg-gray-100 text-gray-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full border">Aprovechables</span>
+                            </div>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                <strong>¿Qué va aquí?</strong> Botellas PET de gaseosas o agua, envases de champú, bolsas plásticas limpias, cajas de papel o cartón secas, periódicos, revistas, latas de aluminio, envases de vidrio y envases tetra pack.
+                            </p>
+                            <div class="bg-emerald-50 p-2 rounded-xl text-[11px] text-emerald-800 font-bold border border-emerald-200">
+                                💡 <strong>Regla de Oro:</strong> Todo elemento debe entregarse <strong>limpio, escurrido y libre de líquidos o comida</strong>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 🟢 CANECA / BOLSA VERDE -->
+                    <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&w=600&q=80" alt="Residuos Orgánicos" class="w-full h-32 object-cover">
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-extrabold text-gray-800 text-xs">🟢 Bolsa / Caneca Verde</span>
+                                <span class="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2 py-0.5 rounded-full">Orgánicos</span>
+                            </div>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                <strong>¿Qué va aquí?</strong> Cáscaras de frutas y verduras, restos de comida preparada, borra de café, bolsitas de aromática/té, cáscaras de huevo, césped cortado y restos de hojas de jardín.
+                            </p>
+                            <div class="bg-emerald-50 p-2 rounded-xl text-[11px] text-emerald-800 font-bold border border-emerald-200">
+                                🌱 <strong>Destino:</strong> Se transforman en abono orgánico para campos agrícolas.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ⚫ CANECA / BOLSA NEGRA -->
+                    <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                        <img src="https://images.unsplash.com/photo-1530587191325-3db32d826c18?auto=format&fit=crop&w=600&q=80" alt="Residuos No Aprovechables" class="w-full h-32 object-cover">
+                        <div class="p-4 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="font-extrabold text-gray-800 text-xs">⚫ Bolsa / Caneca Negra</span>
+                                <span class="bg-gray-800 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full">No Aprovechable</span>
+                            </div>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                <strong>¿Qué va aquí?</strong> Papel higiénico, servilletas usadas, pañales, pañitos húmedos, cartones sucios con grasa/comida y envoltorios metalizados de mecato.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- INFOGRAFÍA DE IMPACTO AMBIENTAL REAL -->
+                <div class="bg-emerald-900 text-white p-4 rounded-2xl space-y-2 shadow-md">
+                    <h4 class="font-extrabold text-xs text-emerald-300 uppercase tracking-wider"><i class="fa-solid fa-earth-americas"></i> El Impacto Real de tu Reciclaje:</h4>
+                    <div class="grid grid-cols-2 gap-2 text-[11px]">
+                        <div class="bg-white/10 p-2.5 rounded-xl border border-white/10">
+                            <span class="font-bold text-yellow-300 block text-xs">🥤 1 Kg de Plástico</span>
+                            Ahorra 1.5 litros de petróleo y reduce emisiones de CO2.
+                        </div>
+                        <div class="bg-white/10 p-2.5 rounded-xl border border-white/10">
+                            <span class="font-bold text-yellow-300 block text-xs">📦 1 Kg de Cartón</span>
+                            Evita la tala de árboles y ahorra 26 litros de agua.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CHATBOT EXPERTO EN RECICLAJE CON IA TOTAL -->
+                <div class="bg-white p-4 rounded-2xl border border-emerald-200 space-y-3 shadow-sm">
+                    <div class="flex items-center justify-between border-b pb-2">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center font-bold text-sm shadow-sm">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-xs text-gray-800">ChatBot Experto en Reciclaje e IA 🧠</h4>
+                                <span class="text-[9px] text-emerald-600 font-bold">● Pregúntame LO QUE SEA sobre reciclaje</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CONTENEDOR DE MENSAJES -->
+                    <div id="chat-messages" class="space-y-2 max-h-64 overflow-y-auto text-xs p-1">
+                        <div class="chat-bubble-ai p-3 max-w-[85%]">
+                            ¡Hola! ♻️ Soy tu asistente IA omnisciente sobre reciclaje. Puedes preguntarme: <i>"¿Qué es reciclar?", "¿Dónde reciclar en Bogotá?", "¿Cómo separar tetra pak?", "Mitos del reciclaje"</i> o sobre cualquier objeto específico.
+                        </div>
+                    </div>
+
+                    <!-- INPUT DE CHAT -->
+                    <div class="flex items-center space-x-2 pt-1">
+                        <input type="text" id="chat-input" placeholder="Escribe tu pregunta sobre reciclaje aquí..." class="flex-1 bg-gray-50 border border-gray-300 rounded-xl p-2.5 text-xs focus:outline-none focus:border-emerald-500" onkeypress="if(event.key === 'Enter') sendChatMessage()">
+                        <button onclick="sendChatMessage()" class="gradient-bg text-white px-3.5 py-2.5 rounded-xl text-xs font-bold shadow-md hover:opacity-90 transition">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+
+                    <!-- PREGUNTAS RÁPIDAS SUGERIDAS -->
+                    <div class="flex flex-wrap gap-1.5 pt-1">
+                        <button onclick="askQuickQuestion('¿Qué es reciclar y por qué es importante?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">❓ ¿Qué es reciclar?</button>
+                        <button onclick="askQuickQuestion('¿Dónde puedo reciclar en Bogotá?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">📍 ¿Dónde reciclar?</button>
+                        <button onclick="askQuickQuestion('¿Cómo se recicla correctamente el Tetra Pak?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">🧃 Tetra Pak</button>
+                        <button onclick="askQuickQuestion('¿Cuáles son los mitos más comunes del reciclaje?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">💡 Mitos reciclaje</button>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -137,12 +300,11 @@
         <section id="screen-scanner" class="hidden space-y-4">
             <div class="flex justify-between items-center">
                 <h3 class="font-bold text-gray-800 text-sm">Escáner de Contenedor IoT</h3>
-                <button onclick="showScreen('dashboard')" class="text-xs text-gray-400 font-bold">Cancelar</button>
+                <button onclick="showScreen('dashboard')" class="text-xs text-gray-400 font-bold">Volver al Inicio</button>
             </div>
             
             <p class="text-xs text-gray-500">Enfoca el código QR del contenedor para verificar que pertenezca a tu localidad registrada.</p>
 
-            <!-- VISOR DE CÁMARA -->
             <div class="bg-black rounded-2xl p-2 shadow-inner">
                 <div id="reader" class="rounded-xl overflow-hidden min-h-[220px]"></div>
             </div>
@@ -180,7 +342,7 @@
                 </div>
 
                 <button onclick="confirmRecycle()" class="w-full gradient-bg text-white font-extrabold py-3 rounded-xl text-xs shadow-md">
-                     Registrar Reciclaje y Abonar Puntos EcoBonus
+                    ⚡ Registrar Reciclaje y Abonar Puntos EcoBonus
                 </button>
             </div>
 
@@ -201,148 +363,163 @@
             </div>
         </section>
 
-        <!-- 5. CAPACITACIÓN CON GUÍA COMPLETA DE BOLSAS Y QUIZ -->
-        <section id="screen-education" class="hidden space-y-4 text-xs">
-            <div>
-                <h3 class="font-bold text-gray-800 text-sm">Capacitación EcoBonus </h3>
-                <p class="text-[11px] text-gray-500">Guía de separación de bolsas y quiz interactivo.</p>
-            </div>
-
-            <!-- GUÍA DETALLADA DE BOLSAS / CANECAS -->
-            <div class="space-y-2.5">
-                <h4 class="font-bold text-gray-700 text-xs uppercase tracking-wider">¿Qué va en cada bolsa / caneca?</h4>
-
-                <!-- BOLSA BLANCA -->
-                <div class="bg-white p-3.5 rounded-xl border-l-4 border-l-gray-300 border border-gray-100 shadow-sm space-y-1">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-gray-800 text-xs">⚪ Bolsa / Caneca Blanca</span>
-                        <span class="bg-gray-100 text-gray-700 text-[9px] font-bold px-2 py-0.5 rounded-full">Residuos Aprovechables</span>
-                    </div>
-                    <p class="text-[11px] text-gray-600 leading-relaxed">
-                        <strong>¿Qué depositar?</strong> Botellas de plástico (PET), envases de champú/detergente, bolsas plásticas limpias, cajas de cartón secas, papel de oficina, periódicos, revistas, latas de aluminio, envases de vidrio y tetra pack.
-                    </p>
-                    <p class="text-[10px] text-emerald-700 font-semibold bg-emerald-50 p-1.5 rounded-lg">
-                        💡 Requisito: Los elementos deben estar limpios, secos y completamente vacíos.
-                    </p>
-                </div>
-
-                <!-- BOLSA VERDE -->
-                <div class="bg-white p-3.5 rounded-xl border-l-4 border-l-emerald-500 border border-gray-100 shadow-sm space-y-1">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-gray-800 text-xs">🟢 Bolsa / Caneca Verde</span>
-                        <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Orgánicos Aprovechables</span>
-                    </div>
-                    <p class="text-[11px] text-gray-600 leading-relaxed">
-                        <strong>¿Qué depositar?</strong> Cáscaras de frutas y verduras, restos de comida preparada, borra de café, bolsitas de té, cáscaras de huevo, césped cortado, hojas secas y restos de plantas de jardín.
-                    </p>
-                    <p class="text-[10px] text-emerald-700 font-semibold bg-emerald-50 p-1.5 rounded-lg">
-                        🌱 Uso: Se procesan para producir compostaje y abono orgánico.
-                    </p>
-                </div>
-
-                <!-- BOLSA NEGRA -->
-                <div class="bg-white p-3.5 rounded-xl border-l-4 border-l-gray-800 border border-gray-100 shadow-sm space-y-1">
-                    <div class="flex items-center justify-between">
-                        <span class="font-bold text-gray-800 text-xs">⚫ Bolsa / Caneca Negra</span>
-                        <span class="bg-gray-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">No Aprovechables</span>
-                    </div>
-                    <p class="text-[11px] text-gray-600 leading-relaxed">
-                        <strong>¿Qué depositar?</strong> Papel higiénico, servilletas usadas, pañales, pañitos húmedos, cartones sucios con grasa/comida (ej. cajas de pizza grasosas), papeles metalizados de papas o mecato, y residuos de barrido.
-                    </p>
-                </div>
-            </div>
-
-            <!-- QUIZ INTERACTIVO SECUENCIAL (5 PREGUNTAS) -->
-            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-3">
-                <div class="flex justify-between items-center">
-                    <span class="font-bold text-amber-800 text-xs"><i class="fa-solid fa-graduation-cap"></i> Quiz de Reciclaje</span>
-                    <span id="quiz-progress" class="text-[10px] font-bold bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full">Pregunta 1 de 5</span>
-                </div>
-
-                <div id="quiz-box" class="space-y-2">
-                    <p id="quiz-question" class="text-xs font-bold text-gray-800">¿En qué caneca debes depositar una botella de agua plástica limpia?</p>
-                    <div id="quiz-options" class="grid grid-cols-1 gap-2 pt-1"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. CONVENIOS Y RECOMPENSAS COMPLETAS -->
-        <section id="screen-rewards" class="hidden space-y-3">
+        <!-- 5. CONVENIOS Y RECOMPENSAS (MEJORADO CON LUGARES DE REDENCIÓN E INSTRUCCIONES) -->
+        <section id="screen-rewards" class="hidden space-y-4">
             <div>
                 <h3 class="font-bold text-gray-800 text-sm">Convenios EcoBonus 🛒</h3>
-                <p class="text-[11px] text-gray-500">Canjea tus puntos acumulados por productos y beneficios reales.</p>
+                <p class="text-[11px] text-gray-500">Redime tus puntos acumulados por beneficios reales en tiendas y servicios aliados.</p>
             </div>
 
-            <div class="space-y-2.5">
-                <!-- CONVENIO 1 -->
-                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Bono Mercado $20.000</h4>
-                        <p class="text-[10px] text-gray-400">Válido en Supermercados Aliados</p>
-                        <span class="text-emerald-600 font-extrabold">200 Puntos</span>
+            <div class="space-y-3">
+
+                <!-- CONVENIO 1: MERCADO ÉXITO / JUMBO -->
+                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase">Supermercados</span>
+                            <h4 class="font-bold text-gray-800 text-xs mt-1">Bono Mercado $20.000</h4>
+                        </div>
+                        <span class="text-emerald-600 font-black text-sm bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">200 pts</span>
                     </div>
-                    <button onclick="redeem(200, 'Bono Mercado $20.000')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+
+                    <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-[11px] space-y-1 text-gray-600">
+                        <p class="font-bold text-gray-800"><i class="fa-solid fa-store text-emerald-600"></i> ¿Dónde redimir o canjear?</p>
+                        <p>Cajas registradoras de <strong>Éxito, Carulla, Jumbo y Metro</strong> a nivel nacional o en sus tiendas virtuales introduciendo el cupón.</p>
+                        <p class="text-[10px] text-gray-400 mt-1"><i class="fa-solid fa-circle-info"></i> Presenta el código digital generado al momento de pagar.</p>
+                    </div>
+
+                    <button onclick="redeem(200, 'Bono Mercado $20.000', 'Éxito, Carulla, Jumbo y Metro', 'Presenta el código en caja antes de registrar tu compra.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Bono $20.000</button>
                 </div>
 
-                <!-- CONVENIO 2 -->
-                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Bono Mercado $50.000</h4>
-                        <p class="text-[10px] text-gray-400">Para compras de canasta familiar</p>
-                        <span class="text-emerald-600 font-extrabold">450 Puntos</span>
+                <!-- CONVENIO 2: BONO MERCADO $50.000 -->
+                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase">Supermercados</span>
+                            <h4 class="font-bold text-gray-800 text-xs mt-1">Bono Mercado $50.000</h4>
+                        </div>
+                        <span class="text-emerald-600 font-black text-sm bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">450 pts</span>
                     </div>
-                    <button onclick="redeem(450, 'Bono Mercado $50.000')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+
+                    <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-[11px] space-y-1 text-gray-600">
+                        <p class="font-bold text-gray-800"><i class="fa-solid fa-store text-emerald-600"></i> ¿Dónde redimir o canjear?</p>
+                        <p>Válido en la canasta familiar en <strong>Supermercados Olímpica, ARA y Éxito</strong>.</p>
+                        <p class="text-[10px] text-gray-400 mt-1"><i class="fa-solid fa-circle-info"></i> Aplicable para compras superiores a $50.000 en punto físico.</p>
+                    </div>
+
+                    <button onclick="redeem(450, 'Bono Mercado $50.000', 'Olímpica, ARA y Éxito', 'Escanear el código de barras del bono en el módulo de pago.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Bono $50.000</button>
                 </div>
 
-                <!-- CONVENIO 3 -->
-                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Canasta Orgánica Frutas</h4>
-                        <p class="text-[10px] text-gray-400">Entrega directa de campesinos</p>
-                        <span class="text-emerald-600 font-extrabold">150 Puntos</span>
+                <!-- CONVENIO 3: CANASTA ORGÁNICA -->
+                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase">Agricultura Local</span>
+                            <h4 class="font-bold text-gray-800 text-xs mt-1">Canasta Orgánica de Frutas y Verduras</h4>
+                        </div>
+                        <span class="text-emerald-600 font-black text-sm bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">150 pts</span>
                     </div>
-                    <button onclick="redeem(150, 'Canasta Orgánica Frutas')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+
+                    <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-[11px] space-y-1 text-gray-600">
+                        <p class="font-bold text-gray-800"><i class="fa-solid fa-store text-emerald-600"></i> ¿Dónde redimir o canjear?</p>
+                        <p>Mercados Campesinos de Bogotá (<strong>Plaza de los Artesanos, Parque Carulla Fontibón o Unicentro</strong>) o domicilio gratis coordinado por la app.</p>
+                    </div>
+
+                    <button onclick="redeem(150, 'Canasta Orgánica Frutas', 'Mercados Campesinos de Bogotá', 'Muestra el cupón en la carpa de la Red de Agricultores Locales.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Canasta Orgánica</button>
                 </div>
 
-                <!-- CONVENIO 4 -->
-                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Termo Reutilizable Eco</h4>
-                        <p class="text-[10px] text-gray-400">Acero inoxidable 500ml</p>
-                        <span class="text-emerald-600 font-extrabold">100 Puntos</span>
+                <!-- CONVENIO 4: TERMO REUTILIZABLE -->
+                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase">Ecológicos</span>
+                            <h4 class="font-bold text-gray-800 text-xs mt-1">Termo Reutilizable Eco (500ml)</h4>
+                        </div>
+                        <span class="text-emerald-600 font-black text-sm bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">100 pts</span>
                     </div>
-                    <button onclick="redeem(100, 'Termo Reutilizable Eco')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+
+                    <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-[11px] space-y-1 text-gray-600">
+                        <p class="font-bold text-gray-800"><i class="fa-solid fa-store text-emerald-600"></i> ¿Dónde redimir o canjear?</p>
+                        <p>Recógelo en cualquier <strong>Punto Ecológico RECICLA+IA de tu Localidad</strong> o Puntos de la Alcaldía Mayor de Bogotá autorizados.</p>
+                    </div>
+
+                    <button onclick="redeem(100, 'Termo Reutilizable Eco', 'Puntos Ecológicos RECICLA+IA', 'Reclámalo presentando tu documento e id de cupón en la tolva central.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Termo Eco</button>
                 </div>
 
-                <!-- CONVENIO 5 -->
-                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Descuento Servicios $30.000</h4>
-                        <p class="text-[10px] text-gray-400">Abono a factura de agua/luz</p>
-                        <span class="text-emerald-600 font-extrabold">300 Puntos</span>
+                <!-- CONVENIO 5: DESCUENTO FACTURA SERVICIOS -->
+                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase">Servicios Públicos</span>
+                            <h4 class="font-bold text-gray-800 text-xs mt-1">Abono $30.000 Factura de Agua o Luz</h4>
+                        </div>
+                        <span class="text-emerald-600 font-black text-sm bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">300 pts</span>
                     </div>
-                    <button onclick="redeem(300, 'Descuento Servicios $30.000')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+
+                    <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-[11px] space-y-1 text-gray-600">
+                        <p class="font-bold text-gray-800"><i class="fa-solid fa-store text-emerald-600"></i> ¿Dónde redimir o canjear?</p>
+                        <p>En las plataformas virtuales de <strong>EAAB (Acueducto de Bogotá)</strong> o <strong>Enel Codensa</strong> ingresando el número de contrato/NIC.</p>
+                    </div>
+
+                    <button onclick="redeem(300, 'Descuento Servicios $30.000', 'EAAB Acueducto / Enel Codensa', 'Ingresa el código del cupón en la sección de abonos de la factura virtual.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Abono Servicios</button>
                 </div>
 
-                <!-- CONVENIO 6 -->
-                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Entrada Cine 2x1 Eco</h4>
-                        <p class="text-[10px] text-gray-400">Salas de cine participantes</p>
-                        <span class="text-emerald-600 font-extrabold">80 Puntos</span>
+                <!-- CONVENIO 6: CINE 2x1 -->
+                <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-2.5">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <span class="bg-emerald-100 text-emerald-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase">Entretenimiento</span>
+                            <h4 class="font-bold text-gray-800 text-xs mt-1">Entrada Cine 2x1 Eco</h4>
+                        </div>
+                        <span class="text-emerald-600 font-black text-sm bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200">80 pts</span>
                     </div>
-                    <button onclick="redeem(80, 'Entrada Cine 2x1 Eco')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+
+                    <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-[11px] space-y-1 text-gray-600">
+                        <p class="font-bold text-gray-800"><i class="fa-solid fa-store text-emerald-600"></i> ¿Dónde redimir o canjear?</p>
+                        <p>Taquillas o sitio web de <strong>Cine Colombia, Procinal y Cinemark</strong> de todos los centros comerciales de Bogotá.</p>
+                    </div>
+
+                    <button onclick="redeem(80, 'Entrada Cine 2x1 Eco', 'Cine Colombia, Procinal y Cinemark', 'Muestra el código en la taquilla o ingrésalo como promocional online.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Entrada 2x1</button>
+                </div>
+
+            </div>
+
+            <!-- MODAL DE CONFIRMACIÓN / DETALLE DEL BONO REDIMIDO -->
+            <div id="reward-coupon-modal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+                <div class="bg-white rounded-3xl p-5 max-w-sm w-full space-y-4 shadow-2xl border">
+                    <div class="text-center space-y-1">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                        <h3 class="font-extrabold text-gray-800 text-base">¡Cupón Redimido con Éxito!</h3>
+                        <p id="coupon-title" class="text-xs text-emerald-600 font-extrabold">Bono Mercado $20.000</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-2xl border border-dashed border-emerald-400 text-center space-y-2">
+                        <span class="text-[10px] text-gray-400 uppercase font-bold block">Código de Redención</span>
+                        <span id="coupon-code" class="text-xl font-black text-emerald-700 tracking-wider block">RECICLAIA-849201</span>
+                        <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full inline-block">Válido por 30 Días</span>
+                    </div>
+
+                    <div class="space-y-1.5 text-xs text-gray-600 bg-emerald-50/50 p-3 rounded-xl border border-emerald-100">
+                        <p><strong>📍 ¿Dónde canjearlo?:</strong> <span id="coupon-store" class="text-gray-800 font-semibold">Éxito y Jumbo</span></p>
+                        <p><strong>📋 Modo de Uso:</strong> <span id="coupon-instructions" class="text-gray-800">Presentar el código en caja.</span></p>
+                    </div>
+
+                    <button onclick="closeCouponModal()" class="w-full gradient-bg text-white font-extrabold py-3 rounded-xl text-xs shadow-md">
+                        Entendido / Guardar en mi Cuenta
+                    </button>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- TAB BAR -->
+    <!-- TAB BAR DE NAVEGACIÓN -->
     <nav id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto bg-white border-t p-2 flex justify-around text-xs text-gray-400 z-50">
         <button onclick="showScreen('dashboard')" id="nav-dashboard" class="flex flex-col items-center">
             <i class="fa-solid fa-house text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Inicio</span>
+            <span class="text-[10px] font-bold mt-0.5">Inicio / Aprender</span>
         </button>
         <button onclick="showScreen('scanner')" id="nav-scanner" class="flex flex-col items-center">
             <i class="fa-solid fa-qrcode text-base"></i>
@@ -351,10 +528,6 @@
         <button onclick="showScreen('rewards')" id="nav-rewards" class="flex flex-col items-center">
             <i class="fa-solid fa-store text-base"></i>
             <span class="text-[10px] font-bold mt-0.5">Convenios</span>
-        </button>
-        <button onclick="showScreen('education')" id="nav-education" class="flex flex-col items-center">
-            <i class="fa-solid fa-book-open text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Aprender</span>
         </button>
     </nav>
 
@@ -369,6 +542,7 @@
             const initial = {
                 "demo@ecobonus.com": {
                     name: "Alejandro Torres",
+                    userType: "Persona Natural",
                     location: "fontibon",
                     pass: "123456",
                     points: 250,
@@ -387,61 +561,20 @@
     let currentUserEmail = localStorage.getItem('ecobonus_active_session') || "demo@ecobonus.com";
     let html5QrCode = null;
 
-    // PREGUNTAS DEL QUIZ DE APRENDIZAJE
-    const quizQuestions = [
-        {
-            q: "1. ¿En qué caneca debes depositar una botella de agua plástica vacía y limpia?",
-            options: [
-                { text: "⚪ Bolsa / Caneca Blanca", correct: true },
-                { text: "🟢 Bolsa / Caneca Verde", correct: false },
-                { text: "⚫ Bolsa / Caneca Negra", correct: false }
-            ]
-        },
-        {
-            q: "2. ¿En qué caneca van las cáscaras de frutas, verduras y restos de comida?",
-            options: [
-                { text: "⚪ Bolsa / Caneca Blanca", correct: false },
-                { text: "🟢 Bolsa / Caneca Verde", correct: true },
-                { text: "⚫ Bolsa / Caneca Negra", correct: false }
-            ]
-        },
-        {
-            q: "3. ¿Dónde debes desechar servilletas y papel higiénico usados?",
-            options: [
-                { text: "⚪ Bolsa / Caneca Blanca", correct: false },
-                { text: "🟢 Bolsa / Caneca Verde", correct: false },
-                { text: "⚫ Bolsa / Caneca Negra", correct: true }
-            ]
-        },
-        {
-            q: "4. ¿Cómo se deben entregar las cajas de cartón para reciclar?",
-            options: [
-                { text: "Mojadas y arrugadas", correct: false },
-                { text: "Limpias, secas y desarmadas", correct: true },
-                { text: "Con restos de comida adentro", correct: false }
-            ]
-        },
-        {
-            q: "5. ¿En qué caneca se depositan las latas de aluminio de gaseosas/jugos?",
-            options: [
-                { text: "⚪ Bolsa / Caneca Blanca", correct: true },
-                { text: "🟢 Bolsa / Caneca Verde", correct: false },
-                { text: "⚫ Bolsa / Caneca Negra", correct: false }
-            ]
-        }
-    ];
-
-    let currentQuizIndex = 0;
-
     function showScreen(id) {
-        ['login', 'register', 'dashboard', 'scanner', 'education', 'rewards'].forEach(s => document.getElementById(`screen-${s}`).classList.add('hidden'));
-        document.getElementById(`screen-${id}`).classList.remove('hidden');
+        ['login', 'register', 'dashboard', 'scanner', 'rewards'].forEach(s => {
+            const el = document.getElementById(`screen-${s}`);
+            if(el) el.classList.add('hidden');
+        });
+        
+        const targetScreen = document.getElementById(`screen-${id}`);
+        if(targetScreen) targetScreen.classList.remove('hidden');
         
         const isAuth = (id === 'login' || id === 'register');
         document.getElementById('main-header').classList.toggle('hidden', isAuth);
         document.getElementById('bottom-nav').classList.toggle('hidden', isAuth);
 
-        const navItems = ['dashboard', 'scanner', 'rewards', 'education'];
+        const navItems = ['dashboard', 'scanner', 'rewards'];
         navItems.forEach(item => {
             const btn = document.getElementById(`nav-${item}`);
             if (btn) {
@@ -458,10 +591,6 @@
             stopCamera();
         }
 
-        if (id === 'education') {
-            loadQuizQuestion();
-        }
-
         updateUI();
     }
 
@@ -472,6 +601,10 @@
             document.getElementById('disp-username').innerText = user.name;
             document.getElementById('disp-location').innerText = user.location;
             document.getElementById('disp-points').innerText = user.points;
+            
+            const typeLabel = user.userType || "Persona Natural";
+            document.getElementById('disp-user-type').innerText = (typeLabel === "Persona Natural" ? "👤 " : typeLabel === "Empresa" ? "🏢 " : "🏫 ") + typeLabel;
+
             document.getElementById('stat-plastico').innerText = user.stats.plastico.toFixed(1) + ' Kg';
             document.getElementById('stat-carton').innerText = user.stats.carton.toFixed(1) + ' Kg';
             document.getElementById('stat-organico').innerText = user.stats.organico.toFixed(1) + ' Kg';
@@ -492,11 +625,12 @@
                 alert("❌ Contraseña incorrecta. Revisa e inténtalo de nuevo.");
             }
         } else {
-            alert("⚠️ Este correo no está registrado en EcoBonus.");
+            alert("⚠️ Este correo no está registrado en RECICLA+IA.");
         }
     }
 
     function register() {
+        const userType = document.getElementById('reg-type').value;
         const name = document.getElementById('reg-name').value.trim();
         const location = document.getElementById('reg-location').value;
         const email = document.getElementById('reg-email').value.trim();
@@ -513,6 +647,7 @@
 
         db[email] = {
             name: name,
+            userType: userType,
             location: location,
             pass: pass,
             points: 100,
@@ -523,7 +658,7 @@
         currentUserEmail = email;
         localStorage.setItem('ecobonus_active_session', email);
 
-        alert(`🎉 ¡Bienvenido a EcoBonus!\n\nTu usuario fue registrado en la localidad de ${location.toUpperCase()}.\nTe obsequiamos +100 puntos de bienvenida.`);
+        alert(`🎉 ¡Bienvenido a RECICLA+IA!\n\nCuenta registrada como [${userType}] en la localidad de ${location.toUpperCase()}.\nTe obsequiamos +100 puntos de bienvenida.`);
         showScreen('dashboard');
     }
 
@@ -587,11 +722,12 @@
         user.points += pts;
         saveUsersDB(db);
         
-        alert(`♻️ ¡DEPÓSITO REGISTRADO EN ECOBONUS!\n\nLocalidad: ${user.location.toUpperCase()}\nMaterial: ${mat.toUpperCase()}\nPeso añadido: ${weight} Kg\nPuntos abonados: +${pts} pts`);
+        alert(`♻️ ¡DEPÓSITO REGISTRADO EN RECICLA+IA!\n\nEntidad: ${user.name}\nLocalidad: ${user.location.toUpperCase()}\nMaterial: ${mat.toUpperCase()}\nPeso añadido: ${weight} Kg\nPuntos abonados: +${pts} pts`);
         showScreen('dashboard');
     }
 
-    function redeem(cost, title) {
+    /* REDENCIÓN CON MODAL DETALLADO DE CONVENIOS Y LUGARES DE CANJE */
+    function redeem(cost, title, storeName, instructions) {
         const db = getUsersDB();
         const user = db[currentUserEmail];
 
@@ -599,51 +735,181 @@
             user.points -= cost;
             saveUsersDB(db);
             updateUI();
-            alert(`🎉 ¡Bono Redimido Exitosamente!\n\nProducto: ${title}\nCódigo de Bono: ECOBONUS-${Math.floor(100000 + Math.random() * 900000)}`);
+
+            const randomCode = 'RECICLAIA-' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('coupon-title').innerText = title;
+            document.getElementById('coupon-code').innerText = randomCode;
+            document.getElementById('coupon-store').innerText = storeName;
+            document.getElementById('coupon-instructions').innerText = instructions;
+
+            document.getElementById('reward-coupon-modal').classList.remove('hidden');
         } else {
-            alert(`⚠️ Puntos insuficientes en tu cuenta EcoBonus.`);
+            alert(`⚠️ Puntos insuficientes en tu cuenta RECICLA+IA. Necesitas ${cost} pts.`);
         }
     }
 
-    function loadQuizQuestion() {
-        const qData = quizQuestions[currentQuizIndex];
-        document.getElementById('quiz-progress').innerText = `Pregunta ${currentQuizIndex + 1} de 5`;
-        document.getElementById('quiz-question').innerText = qData.q;
-
-        const optionsContainer = document.getElementById('quiz-options');
-        optionsContainer.innerHTML = '';
-
-        qData.options.forEach(opt => {
-            const btn = document.createElement('button');
-            btn.className = "bg-white border p-2.5 rounded-xl text-left font-semibold text-xs text-gray-700 hover:bg-emerald-50 transition";
-            btn.innerText = opt.text;
-            btn.onclick = () => handleAnswer(opt.correct);
-            optionsContainer.appendChild(btn);
-        });
+    function closeCouponModal() {
+        document.getElementById('reward-coupon-modal').classList.add('hidden');
     }
 
-    function handleAnswer(isCorrect) {
-        if (isCorrect) {
-            alert("🎉 ¡Respuesta Correcta!");
-        } else {
-            alert("❌ Respuesta incorrecta.");
-        }
+    /* MOTOR DE IA EXPERTA EN TODO TEMA DE RECICLAJE */
+    function sendChatMessage() {
+        const inputEl = document.getElementById('chat-input');
+        const text = inputEl.value.trim();
+        if (!text) return;
 
-        currentQuizIndex++;
+        appendMessage(text, 'user');
+        inputEl.value = '';
 
-        if (currentQuizIndex < quizQuestions.length) {
-            loadQuizQuestion();
-        } else {
-            const db = getUsersDB();
-            const user = db[currentUserEmail];
-            user.points += 20;
-            saveUsersDB(db);
-
-            alert("🏆 ¡Completaste el Quiz EcoBonus!\n\nTe hemos abonado +20 puntos por aprender.");
-            currentQuizIndex = 0;
-            showScreen('dashboard');
-        }
+        setTimeout(() => {
+            const aiResponse = generateComprehensiveAIResponse(text);
+            appendMessage(aiResponse, 'ai');
+        }, 300);
     }
+
+    function askQuickQuestion(qText) {
+        document.getElementById('chat-input').value = qText;
+        sendChatMessage();
+    }
+
+    function appendMessage(text, sender) {
+        const container = document.getElementById('chat-messages');
+        const wrapper = document.createElement('div');
+        wrapper.className = sender === 'user' ? 'flex justify-end' : 'flex justify-start';
+
+        const bubble = document.createElement('div');
+        bubble.className = sender === 'user' ? 'chat-bubble-user p-3 max-w-[85%]' : 'chat-bubble-ai p-3 max-w-[85%]';
+        bubble.innerHTML = text;
+
+        wrapper.appendChild(bubble);
+        container.appendChild(wrapper);
+        container.scrollTop = container.scrollHeight;
+    }
+
+    function generateComprehensiveAIResponse(prompt) {
+        const q = prompt.toLowerCase();
+
+        // 1. ¿QUÉ ES RECICLAR? Y CONCEPTOS BÁSICOS
+        if (q.includes('que es reciclar') || q.includes('qué es reciclar') || q.includes('definicion de reciclaje') || q.includes('concepto de reciclaje') || q.includes('que significa reciclar')) {
+            return "♻️ <strong>¿Qué es reciclar?</strong><br>Es el proceso de recolectar, transformar y reincorporar residuos en nuevos ciclos de fabricación como materia prima.<br><br><strong>¿Por qué es vital?</strong><br>• Reduce la extracción de recursos naturales.<br>• Disminuye el consumo de energía y agua.<br>• Alarga la vida útil de los rellenos sanitarios (como Doña Juana).<br>• Genera empleo e ingresos para los recicladores de oficio.";
+        }
+
+        // 2. ¿DÓNDE RECICLAR? (Ubicaciones, Bogotá, Colombia, Básculas)
+        if (q.includes('donde reciclar') || q.includes('dónde reciclar') || q.includes('donde llevo') || q.includes('puntos de reciclaje') || q.includes('puntos limpios') || q.includes('donde entregar')) {
+            return "📍 <strong>¿Dónde reciclar?</strong><br><br>1. <strong>Básculas RECICLA+IA:</strong> Escanea el código QR en las tolvas de tu localidad para acumular puntos EcoBonus.<br>2. <strong>Ruta de Reciclaje de tu Barrio:</strong> Entrega tus residuos aprovechables limpios en <strong>Bolsa Blanca</strong> a los recicladores de oficio registrados.<br>3. <strong>ECA (Estaciones de Clasificación):</strong> Centros autorizados de recolección.<br>4. <strong>Puntos Posconsumo:</strong> Centros comerciales y supermercados (Éxito, Jumbo, Alkosto) para pilas, medicamentos, electrónicos y bombillos.";
+        }
+
+        // 3. ¿CÓMO RECICLAR? (Pasos generales)
+        if (q.includes('como reciclar') || q.includes('cómo reciclar') || q.includes('pasos para reciclar') || q.includes('como separar')) {
+            return "📝 <strong>Pasos para reciclar correctamente:</strong><br><br>1. <strong>Limpia y Seca:</strong> Enjuaga las botellas o latas. Los residuos húmedos o con comida arruinan el cartón o papel reciclable.<br>2. <strong>Aplastá y Reduce Espacio:</strong> Comprime botellas PET y desarma cajas.<br>3. <strong>Clasifica según el Código de Colores:</strong><br>• ⚪ <strong>Blanca:</strong> Reciclables limpios.<br>• 🟢 <strong>Verde:</strong> Orgánicos.<br>• ⚫ <strong>Negra:</strong> No aprovechables.";
+        }
+
+        // 4. TETRA PAK / AVAL / ENVASE MULTICAPA
+        if (q.includes('tetra') || q.includes('tetrapak') || q.includes('caja de leche') || q.includes('caja de jugo')) {
+            return "🧃 <strong>Reciclaje de Tetra Pak:</strong><br>El Tetra Pak está compuesto por cartón (75%), plástico (20%) y aluminio (5%).<br><br><strong>¿Cómo reciclarlo?</strong><br>1. Despliega las pestañas de las esquinas.<br>2. Aplástalo para escurrir todo el líquido sobrante.<br>3. Ponle la tapa si la tiene y deposítalo en la <strong>Bolsa/Caneca Blanca</strong>.";
+        }
+
+        // 5. VIDRIO Y FRASCOS
+        if (q.includes('vidrio') || q.includes('botella de vidrio') || q.includes('frasco')) {
+            return "🍾 <strong>Reciclaje de Vidrio:</strong><br>El vidrio es 100% reciclable e infinitas veces sin perder calidad.<br><br>• Va en la <strong>Bolsa Blanca</strong> totalmente enjuagado.<br>• ⚠️ <strong>Vidrio Roto/Espejos/Platos de cerámica:</strong> No van igual. Envuélvelos en papel o cartón grueso, márcalos con una cinta y colócalos en la bolsa negra para proteger la salud de los recicladores.";
+        }
+
+        // 6. METALES / LATAS / ALUMINIO
+        if (q.includes('lata') || q.includes('aluminio') || q.includes('metal') || q.includes('cobre') || q.includes('atun') || q.includes('atún')) {
+            return "🥫 <strong>Latas y Metales:</strong><br>• Latas de gaseosa/cerveza (aluminio) y latas de atún/conservas (hojalata) van en la <strong>Bolsa Blanca</strong>.<br>• Lávalas brevemente para evitar malos olores y plagas.";
+        }
+
+        // 7. PLÁSTICOS (PET, HDPE, Bolsas)
+        if (q.includes('plastico') || q.includes('plástico') || q.includes('pet') || q.includes('bolsa de plastico')) {
+            return "🥤 <strong>Plásticos (PET, HDPE, LDPE):</strong><br>• Botellas de agua/gaseosa (PET) y envases de champú o detergente (HDPE) van en la <strong>Bolsa Blanca</strong>.<br>• Las bolsas plásticas limpias y secas se pueden reciclar o usar para hacer 'Botellas de Amor' (eco-ladrillos).";
+        }
+
+        // 8. PAPEL Y CARTÓN
+        if (q.includes('papel') || q.includes('carton') || q.includes('cartón') || q.includes('periódico') || q.includes('periodico') || q.includes('cuaderno')) {
+            return "📦 <strong>Papel y Cartón:</strong><br>• Cajas, periódicos, revistas, folletos y cuadernos sin espiral metálico van en la <strong>Bolsa Blanca</strong>.<br>• ⚠️ <strong>OJO:</strong> Servilletas usadas, papel higiénico, papel plastificado, térmico (facturas) o cartón sucio con grasa de pizza van a la <strong>Bolsa Negra</strong>.";
+        }
+
+        // 9. MITOS DEL RECICLAJE
+        if (q.includes('mito') || q.includes('falso') || q.includes('mentira') || q.includes('verdad')) {
+            return "💡 <strong>Mitos comunes del reciclaje:</strong><br><br>❌ <i>'Todo se junta en el camión de basura':</i> <strong>FALSO.</strong> Los camiones de reciclaje o recicladores de oficio solo recogen la bolsa blanca.<br>❌ <i>'Hay que lavar las cosas con jabón':</i> <strong>FALSO.</strong> Basta con escurrir o enjuagar con poca agua sobrante.<br>❌ <i>'El icopor se recicla siempre':</i> <strong>FALSO.</strong> Solo el icopor industrial limpio tiene proceso; el de comida va a la bolsa negra.";
+        }
+
+        // 10. LEYES Y DERECHOS / PLÁSTICOS DE UN SOLO USO
+        if (q.includes('ley') || q.includes('norma') || q.includes('prohibic') || q.includes('un solo uso') || q.includes('resolucion 2184')) {
+            return "⚖️ <strong>Legislación Ambiental en Colombia:</strong><br><br>• <strong>Resolución 2184 de 2019:</strong> Estableció el código unificado de colores (Blanco, Verde, Negro).<br>• <strong>Ley de Plásticos de Un Solo Uso (Ley 2232):</strong> Prohíbe gradualmente plásticos como pitillos, mezcladores, soportes de bombas, cubiertos desechables y bolsas de embalaje.";
+        }
+
+        // 11. BOMBILLOS E ILUMINACIÓN
+        if (q.includes('bombill') || q.includes('fluorescente') || q.includes('led') || q.includes('foco') || q.includes('lampara') || q.includes('lámpara')) {
+            return "💡 <strong>Bombillos y Tubos Fluorescentes:</strong><br>Son considerados residuos posconsumo con mercurio y componentes metálicos.<br><br>• Llévalos a los contenedores de <i>Lumina</i> en supermercados y centros comerciales.<br>• ⚠️ ¡Nunca los tires en bolsas ordinarias ni los rompas!";
+        }
+
+        // 12. ELECTRÓNICOS (RAEE)
+        if (q.includes('celular') || q.includes('computador') || q.includes('laptop') || q.includes('pantalla') || q.includes('teclado') || q.includes('electrodomestico') || q.includes('cable') || q.includes('cargador') || q.includes('televisor') || q.includes('raee')) {
+            return "💻 <strong>Residuos Electrónicos (RAEE):</strong><br>Contienen metales valiosos (cobre, oro) y metales pesados.<br><br>• Deposítalos en los Puntos Limpios de <i>EcoCómputo</i> o en jornadas especiales de la Secretaría de Ambiente.";
+        }
+
+        // 13. PILAS Y BATERÍAS
+        if (q.includes('pila') || q.includes('bateria') || q.includes('batería') || q.includes('acumulador')) {
+            return "🔋 <strong>Pilas y Baterías Usadas:</strong><br>Altamente contaminantes por sus compuestos de cadmio y litio.<br><br>• Llévalas a los contenedores del programa <i>Recopila</i> en portales de TransMilenio y supermercados.";
+        }
+
+        // 14. LLANTAS
+        if (q.includes('llanta') || q.includes('neumatico') || q.includes('neumático') || q.includes('caucho')) {
+            return "🛞 <strong>Llantas Usadas:</strong><br>• Entrega tus llantas en puntos del programa <i>Rueda Verde</i> o centros de servicio automotriz autorizados.<br>• Se trituran para fabricar asfalto ecológico y parques infantiles.";
+        }
+
+        // 15. ROPA / TEXTILES
+        if (q.includes('ropa') || q.includes('textil') || q.includes('tela') || q.includes('zapato') || q.includes('prenda')) {
+            return "👕 <strong>Ropa y Textiles:</strong><br>• Si está usable: Dónala a programas comunitarios o mercados de segunda mano.<br>• Si está dañada o rota: Va a la <strong>Bolsa Negra</strong> o a contenedores de moda circular.";
+        }
+
+        // 16. ICOPOR
+        if (q.includes('icopor') || q.includes('poliestireno')) {
+            return "📦 <strong>Icopor (Polietileno expandido):</strong><br>• Si se usó con alimentos (sucio): Va a la <strong>Bolsa Negra</strong>.<br>• Si es empaque limpio de aparatos nuevos: Va a la <strong>Bolsa Blanca</strong>.";
+        }
+
+        // 17. ACEITES
+        if (q.includes('aceite')) {
+            return "🛢️ <strong>Aceites Usados:</strong><br>• <strong>Cocina:</strong> Déjalo enfriar, fíltralo y embólsalo en una botella PET. Llévalo a puntos limpios para biodiésel.<br>• <strong>Motor:</strong> Entrégalo en talleres autorizados de cambio de aceite.";
+        }
+
+        // 18. MEDICAMENTOS
+        if (q.includes('medicina') || q.includes('pastilla') || q.includes('medicamento') || q.includes('jarabe') || q.includes('jeringa')) {
+            return "💊 <strong>Medicamentos Vencidos:</strong><br>• Llévalos a los contenedores de <i>Punto Azul</i> en droguerías y farmacias.<br>• 💉 <strong>Jeringas usadas:</strong> Guárdalas en un bote plástico rígido y entrégalas como residuo hospitalario.";
+        }
+
+        // 19. COMPOST / ORGÁNICOS
+        if (q.includes('compost') || q.includes('abono') || q.includes('organico') || q.includes('orgánico') || q.includes('comida') || q.includes('cascara') || q.includes('cáscara')) {
+            return "🌱 <strong>Residuos Orgánicos:</strong><br>• Van en la <strong>Bolsa Verde</strong>.<br>• Incluyen cáscaras de frutas/verduras, borra de café y hojas de jardín. Al degradarse producen abono agrícola.";
+        }
+
+        // 20. CÓDIGO DE COLORES
+        if (q.includes('colores') || q.includes('caneca') || q.includes('bolsa') || q.includes('blanca') || q.includes('verde') || q.includes('negra')) {
+            return "🎨 <strong>Código de Colores Oficial (Resolución 2184):</strong><br><br>• <strong>⚪ Bolsa Blanca:</strong> Reciclables limpios (plástico, vidrio, papel, cartón, metal).<br>• <strong>🟢 Bolsa Verde:</strong> Orgánicos aprovechables (restos de comida, cáscaras).<br>• <strong>⚫ Bolsa Negra:</strong> No aprovechables (servilletas usadas, papel higiénico, pañales).";
+        }
+
+        // 21. ECONOMÍA CIRCULAR / BENEFICIOS
+        if (q.includes('economia circular') || q.includes('economía circular')) {
+            return "🌐 <strong>Economía Circular:</strong> Es el modelo sostenible enfocado en reducir, reutilizar y reciclar materiales para mantenerlos en uso la mayor cantidad de tiempo posible y evitar la producción de basura.";
+        }
+
+        if (q.includes('3r') || q.includes('tres r') || q.includes('reducir')) {
+            return "🔄 <strong>Las 3 Erres:</strong><br>1. <strong>Reducir:</strong> Generar menos desperdicio.<br>2. <strong>Reutilizar:</strong> Dar un nuevo uso a objetos viejos.<br>3. <strong>Reciclar:</strong> Transformar industrialmente los materiales en nuevos productos.";
+        }
+
+        // RESPUESTA INTELIGENTE GENERADA AUTOMÁTICAMENTE PARA CUALQUIER OTRA CONSULTA
+        return `🤖 <strong>Asistente IA RECICLA+IA sobre "${prompt}":</strong><br><br>` +
+               `Para gestionar correctamente este elemento en Colombia:<br>` +
+               `1. <strong>Limpio y Seco:</strong> Si es de plástico, cartón, metal o vidrio limpio, deposítalo en la <strong>Bolsa Blanca (Aprovechable)</strong>.<br>` +
+               `2. <strong>Contaminado o Sucio:</strong> Si contiene restos de comida, grasas o fluidos, va a la <strong>Bolsa Negra (No Aprovechable)</strong>.<br>` +
+               `3. <strong>Residuo Especial/Peligroso:</strong> Si contiene componentes químicos, electrónicos o biológicos, llévalo a un Punto Posconsumo autorizado de tu localidad. 🌿`;
+    }
+
+    // Inicializar app mostrando login si no hay sesión
+    document.addEventListener("DOMContentLoaded", function() {
+        showScreen('login');
+    });
 </script>
 </body>
 </html>
