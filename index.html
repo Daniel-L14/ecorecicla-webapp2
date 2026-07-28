@@ -6,9 +6,9 @@
     <title>Eco-Bonus</title>
 
     <!-- CONFIGURACIÓN DE ICONO PARA PANTALLA DE INICIO (IOS Y ANDROID) CON TU ARCHIVO LOCAL logo.png -->
-    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-    <link rel="shortcut icon" href="logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png?v=2">
+    <link rel="shortcut icon" href="logo.png?v=2">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -35,12 +35,11 @@
             <div class="flex items-center space-x-3">
                 <!-- LOGO EN EL HEADER SUPERIOR -->
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1 shadow overflow-hidden">
-                    <img src="logo.png" alt="Eco-Bonus Logo" class="w-full h-full object-contain">
+                    <img src="logo.png?v=2" alt="Eco-Bonus Logo" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <p class="text-xs text-emerald-100">Hola de nuevo,</p>
                     <h2 id="disp-username" class="text-base font-bold leading-tight">Usuario Eco-Bonus</h2>
-                    <!-- TIPO DE ENTIDAD REGISTRADA EN COLOR BLANCO -->
                     <span id="disp-user-type" class="inline-block bg-white/20 text-[10px] font-extrabold text-white px-2 py-0.5 rounded-md mt-0.5 border border-white/20">
                         👤 Persona Natural
                     </span>
@@ -71,8 +70,8 @@
         <!-- 1. LOGIN -->
         <section id="screen-login" class="flex flex-col justify-center min-h-[80vh] space-y-4">
             <div class="text-center flex flex-col items-center">
-                <!-- LOGO PRINCIPAL EN EL LOGIN USANDO logo.png -->
-                <img src="logo.png" alt="Eco-Bonus" class="w-56 h-auto mb-2 object-contain">
+                <!-- LOGO PRINCIPAL EN EL LOGIN USANDO logo.png?v=2 -->
+                <img src="logo.png?v=2" alt="Eco-Bonus" class="w-56 h-auto mb-2 object-contain">
             </div>
             <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
                 <div>
@@ -91,7 +90,7 @@
         <!-- 2. REGISTRO -->
         <section id="screen-register" class="hidden min-h-[80vh] flex flex-col justify-center space-y-4">
             <div class="text-center flex flex-col items-center">
-                <img src="logo.png" alt="Eco-Bonus" class="w-40 h-auto mb-1 object-contain">
+                <img src="logo.png?v=2" alt="Eco-Bonus" class="w-40 h-auto mb-1 object-contain">
                 <h2 class="text-lg font-bold text-gray-800">Registro Eco-Bonus</h2>
                 <p class="text-xs text-gray-500">Regístrate para habilitar los contenedores de tu zona</p>
             </div>
@@ -99,9 +98,9 @@
                 <div>
                     <label class="text-[11px] font-bold text-gray-600 block mb-1">Tipo de Usuario / Entidad</label>
                     <select id="reg-type" class="w-full p-3 bg-gray-50 border rounded-xl text-xs font-bold text-gray-700 focus:outline-none focus:border-emerald-500">
-                        <option value="Persona Natural">👤 Persona Natural</option>
-                        <option value="Empresa">🏢 Empresa / Negocio</option>
-                        <option value="Colegio (Básica y Primaria)">🏫 Colegio (Educación Básica y Primaria)</option>
+                        <option value="Persona Natural">Persona Natural</option>
+                        <option value="Empresa">Empresa / Negocio</option>
+                        <option value="Colegio (Básica y Primaria)">Colegio (Educación Básica y Primaria)</option>
                     </select>
                 </div>
                 <div>
@@ -819,7 +818,6 @@
         showScreen('dashboard');
     }
 
-    /* REDENCIÓN CON MODAL DETALLADO DE CONVENIOS Y LUGARES DE CANJE */
     function redeem(cost, title, storeName, instructions) {
         const db = getUsersDB();
         const user = db[currentUserEmail];
@@ -845,7 +843,6 @@
         document.getElementById('reward-coupon-modal').classList.add('hidden');
     }
 
-    /* MOTOR DE IA EXPERTA EN TODO TEMA DE RECICLAJE Y CERTIFICACIÓN */
     function sendChatMessage() {
         const inputEl = document.getElementById('chat-input');
         const text = inputEl.value.trim();
@@ -882,32 +879,26 @@
     function generateComprehensiveAIResponse(prompt) {
         const q = prompt.toLowerCase();
 
-        // CONOCIMIENTO SOBRE EL ICA Y CERTIFICACIÓN
         if (q.includes('ica') || q.includes('certifica') || q.includes('buenas practicas') || q.includes('bpa') || q.includes('predio') || q.includes('agropecuario')) {
             return "🏅 <strong>Certificación ICA en Buenas Prácticas Agrícolas (BPA):</strong><br><br>El ICA certifica predios agrícolas que producen alimentos sanos e inocuos mediante el uso de abonos orgánicos compostados derivados del reciclaje.<br><br><strong>Pasos para certificar tu predio/proyecto:</strong><br>1. Radicar la solicitud <i>Forma ICA 3-189</i> en la gerencia seccional o Ventanilla Única.<br>2. Anexar plano del predio, uso de suelo y acreditación de asistencia técnica agrónoma.<br>3. Demostrar que los insumos orgánicos compostados cumplen con estándares de inocuidad sin contaminación biológica.";
         }
 
-        // 1. ¿QUÉ ES RECICLAR? Y CONCEPTOS BÁSICOS
         if (q.includes('que es reciclar') || q.includes('qué es reciclar') || q.includes('definicion de reciclaje') || q.includes('concepto de reciclaje') || q.includes('que significa reciclar')) {
             return "♻️ <strong>¿Qué es reciclar?</strong><br>Es el proceso de recolectar, transformar y reincorporar residuos en nuevos ciclos de fabricación como materia prima.<br><br><strong>¿Por qué es vital?</strong><br>• Reduce la extracción de recursos naturales.<br>• Disminuye el consumo de energía y agua.<br>• Alarga la vida útil de los rellenos sanitarios (como Doña Juana).<br>• Genera empleo e ingresos para los recicladores de oficio.";
         }
 
-        // 2. ¿DÓNDE RECICLAR?
         if (q.includes('donde reciclar') || q.includes('dónde reciclar') || q.includes('donde llevo') || q.includes('puntos de reciclaje') || q.includes('puntos limpios') || q.includes('donde entregar')) {
             return "📍 <strong>¿Dónde reciclar?</strong><br><br>1. <strong>Básculas Eco-Bonus:</strong> Escanea el código QR en las tolvas de tu localidad para acumular puntos Eco-Bonus.<br>2. <strong>Ruta de Reciclaje de tu Barrio:</strong> Entrega tus residuos aprovechables limpios en <strong>Bolsa Blanca</strong> a los recicladores de oficio registrados.<br>3. <strong>ECA (Estaciones de Clasificación):</strong> Centros autorizados de recolección.<br>4. <strong>Puntos Posconsumo:</strong> Centros comerciales y supermercados para pilas, medicamentos, electrónicos y bombillos.";
         }
 
-        // 3. ¿CÓMO RECICLAR?
         if (q.includes('como reciclar') || q.includes('cómo reciclar') || q.includes('pasos para reciclar') || q.includes('como separar')) {
             return "📝 <strong>Pasos para reciclar correctamente:</strong><br><br>1. <strong>Limpia y Seca:</strong> Enjuaga las botellas o latas.<br>2. <strong>Aplastá y Reduce Espacio:</strong> Comprime botellas PET y desarma cajas.<br>3. <strong>Clasifica según el Código de Colores:</strong><br>• ⚪ <strong>Blanca:</strong> Reciclables limpios.<br>• 🟢 <strong>Verde:</strong> Orgánicos.<br>• ⚫ <strong>Negra:</strong> No aprovechables.";
         }
 
-        // 4. TETRA PAK
         if (q.includes('tetra') || q.includes('tetrapak') || q.includes('caja de leche') || q.includes('caja de jugo')) {
             return "🧃 <strong>Reciclaje de Tetra Pak:</strong><br>El Tetra Pak está compuesto por cartón (75%), plástico (20%) y aluminio (5%).<br><br><strong>¿Cómo reciclarlo?</strong><br>1. Despliega las pestañas de las esquinas.<br>2. Aplástalo para escurrir todo el líquido sobrante.<br>3. Ponle la tapa si la tiene y deposítalo en la <strong>Bolsa/Caneca Blanca</strong>.";
         }
 
-        // RESPUESTA GENERAL
         return `🤖 <strong>Asistente IA Eco-Bonus sobre "${prompt}":</strong><br><br>` +
                `Para gestionar correctamente este elemento en Colombia:<br>` +
                `1. <strong>Limpio y Seco:</strong> Deposítalo en la <strong>Bolsa Blanca (Aprovechable)</strong>.<br>` +
@@ -915,7 +906,6 @@
                `3. <strong>Residuos Agrícolas / Orgánicos:</strong> Deposítalos en la <strong>Bolsa Verde</strong> para convertirlos en abono y aplicar a certificar en el ICA. 🌿`;
     }
 
-    // Inicializar app mostrando login si no hay sesión
     document.addEventListener("DOMContentLoaded", function() {
         showScreen('login');
     });
