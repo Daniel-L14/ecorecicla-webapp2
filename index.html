@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RECICLA+IA</title>
+    <title>Eco-Bonus</title>
 
-    <!-- CONFIGURACIÓN DE ICONO PARA LA PANTALLA DE INICIO EN CELULARES (IOS Y ANDROID) -->
+    <!-- CONFIGURACIÓN DE ICONO PARA PANTALLA DE INICIO (IOS Y ANDROID) CON TU ARCHIVO LOCAL logo.png -->
     <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
     <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
     <link rel="shortcut icon" href="logo.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Librería de lector de código QR por cámara -->
+    <!-- Lector QR -->
     <script src="https://unpkg.com/html5-qrcode"></script>
     <style>
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f3f4f6; -webkit-tap-highlight-color: transparent; }
@@ -35,11 +35,11 @@
             <div class="flex items-center space-x-3">
                 <!-- LOGO EN EL HEADER SUPERIOR -->
                 <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1 shadow overflow-hidden">
-                    <img src="logo.png" alt="RECICLA+IA Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=100&q=80';">
+                    <img src="logo.png" alt="Eco-Bonus Logo" class="w-full h-full object-contain">
                 </div>
                 <div>
                     <p class="text-xs text-emerald-100">Hola de nuevo,</p>
-                    <h2 id="disp-username" class="text-base font-bold leading-tight">Usuario RECICLA+IA</h2>
+                    <h2 id="disp-username" class="text-base font-bold leading-tight">Usuario Eco-Bonus</h2>
                     <!-- TIPO DE ENTIDAD REGISTRADA EN COLOR BLANCO -->
                     <span id="disp-user-type" class="inline-block bg-white/20 text-[10px] font-extrabold text-white px-2 py-0.5 rounded-md mt-0.5 border border-white/20">
                         👤 Persona Natural
@@ -56,7 +56,7 @@
         </div>
 
         <div class="bg-white/10 p-3 rounded-2xl text-center border border-white/20">
-            <span class="text-xs text-emerald-100">MIS PUNTOS ECOBONUS</span>
+            <span class="text-xs text-emerald-100">MIS PUNTOS ECO-BONUS</span>
             <div class="flex items-center justify-center space-x-2">
                 <i class="fa-solid fa-coins text-yellow-300 text-xl"></i>
                 <span id="disp-points" class="text-2xl font-black">250</span>
@@ -71,8 +71,8 @@
         <!-- 1. LOGIN -->
         <section id="screen-login" class="flex flex-col justify-center min-h-[80vh] space-y-4">
             <div class="text-center flex flex-col items-center">
-                <img src="logo.png" alt="RECICLA+IA" class="w-48 h-auto mb-2 object-contain" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=300&q=80';">
-                <p class="text-xs text-gray-500 font-medium">Inteligencia • Participación • Sostenibilidad</p>
+                <!-- LOGO PRINCIPAL EN EL LOGIN USANDO logo.png -->
+                <img src="logo.png" alt="Eco-Bonus" class="w-56 h-auto mb-2 object-contain">
             </div>
             <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
                 <div>
@@ -91,8 +91,8 @@
         <!-- 2. REGISTRO -->
         <section id="screen-register" class="hidden min-h-[80vh] flex flex-col justify-center space-y-4">
             <div class="text-center flex flex-col items-center">
-                <img src="logo.png" alt="RECICLA+IA" class="w-36 h-auto mb-1 object-contain" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=300&q=80';">
-                <h2 class="text-lg font-bold text-gray-800">Registro RECICLA+IA</h2>
+                <img src="logo.png" alt="Eco-Bonus" class="w-40 h-auto mb-1 object-contain">
+                <h2 class="text-lg font-bold text-gray-800">Registro Eco-Bonus</h2>
                 <p class="text-xs text-gray-500">Regístrate para habilitar los contenedores de tu zona</p>
             </div>
             <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
@@ -126,7 +126,7 @@
                     <label class="text-[11px] font-bold text-gray-600 block mb-1">Crea una Contraseña</label>
                     <input type="password" id="reg-pass" placeholder="••••••••" class="w-full p-3 bg-gray-50 border rounded-xl text-xs">
                 </div>
-                <button onclick="register()" class="w-full gradient-bg text-white font-bold py-3 rounded-xl text-xs shadow-md">Crear Cuenta (+100 EcoBonus)</button>
+                <button onclick="register()" class="w-full gradient-bg text-white font-bold py-3 rounded-xl text-xs shadow-md">Crear Cuenta (+100 Eco-Bonus)</button>
             </div>
             <p class="text-center text-xs text-gray-500"><button onclick="showScreen('login')" class="text-emerald-600 font-bold underline">Volver al Login</button></p>
         </section>
@@ -160,6 +160,16 @@
                 </div>
             </div>
 
+            <!-- BANNER DIRECTO A CERTIFICACIONES ICA -->
+            <div onclick="showScreen('certifications')" class="bg-amber-500 text-white p-4 rounded-2xl flex items-center justify-between cursor-pointer shadow-md hover:bg-amber-600 transition">
+                <div class="space-y-0.5">
+                    <span class="bg-white/20 text-[9px] font-extrabold px-2 py-0.5 rounded-full uppercase">Alianzas Institucionales</span>
+                    <h4 class="font-bold text-xs">Certificación de Predios y Proyectos 🏅</h4>
+                    <p class="text-[10px] text-amber-100">Certifica tus proyectos ecológicos y compost con el ICA y entidades ambientales.</p>
+                </div>
+                <i class="fa-solid fa-chevron-right text-sm ml-2"></i>
+            </div>
+
             <!-- MÓDULO EDUCATIVO INTERACTIVO PRINCIPAL -->
             <div class="space-y-4 pt-2">
                 <div class="border-b pb-2 flex justify-between items-end">
@@ -187,7 +197,7 @@
                     </div>
                 </div>
 
-                <!-- GUÍA VISUAL ILUSTRADA CON IMÁGENES EN ALTA DEFINICIÓN -->
+                <!-- GUÍA VISUAL ILUSTRADA CON IMÁGENES REALES -->
                 <div class="space-y-3">
                     <h4 class="font-extrabold text-gray-800 text-xs uppercase tracking-wider">Código de Colores Ilustrado</h4>
 
@@ -272,7 +282,7 @@
                     <!-- CONTENEDOR DE MENSAJES -->
                     <div id="chat-messages" class="space-y-2 max-h-64 overflow-y-auto text-xs p-1">
                         <div class="chat-bubble-ai p-3 max-w-[85%]">
-                            ¡Hola! ♻️ Soy tu asistente IA omnisciente sobre reciclaje. Puedes preguntarme: <i>"¿Qué es reciclar?", "¿Dónde reciclar en Bogotá?", "¿Cómo separar tetra pak?", "Mitos del reciclaje"</i> o sobre cualquier objeto específico.
+                            ¡Hola! ♻️ Soy tu asistente IA omnisciente sobre reciclaje. Puedes preguntarme: <i>"¿Qué es reciclar?", "¿Dónde reciclar en Bogotá?", "¿Cómo certificarme en el ICA?", "Mitos del reciclaje"</i> o sobre cualquier objeto específico.
                         </div>
                     </div>
 
@@ -287,7 +297,7 @@
                     <!-- PREGUNTAS RÁPIDAS SUGERIDAS -->
                     <div class="flex flex-wrap gap-1.5 pt-1">
                         <button onclick="askQuickQuestion('¿Qué es reciclar y por qué es importante?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">❓ ¿Qué es reciclar?</button>
-                        <button onclick="askQuickQuestion('¿Dónde puedo reciclar en Bogotá?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">📍 ¿Dónde reciclar?</button>
+                        <button onclick="askQuickQuestion('¿Cómo puedo certificarme con el ICA en recolección y abonos?')" class="text-[10px] bg-amber-50 text-amber-700 border border-amber-200 px-2 py-1 rounded-lg font-bold">🏅 Certificación ICA</button>
                         <button onclick="askQuickQuestion('¿Cómo se recicla correctamente el Tetra Pak?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">🧃 Tetra Pak</button>
                         <button onclick="askQuickQuestion('¿Cuáles son los mitos más comunes del reciclaje?')" class="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-1 rounded-lg font-bold">💡 Mitos reciclaje</button>
                     </div>
@@ -342,7 +352,7 @@
                 </div>
 
                 <button onclick="confirmRecycle()" class="w-full gradient-bg text-white font-extrabold py-3 rounded-xl text-xs shadow-md">
-                    ⚡ Registrar Reciclaje y Abonar Puntos EcoBonus
+                    ⚡ Registrar Reciclaje y Abonar Puntos Eco-Bonus
                 </button>
             </div>
 
@@ -363,10 +373,10 @@
             </div>
         </section>
 
-        <!-- 5. CONVENIOS Y RECOMPENSAS (MEJORADO CON LUGARES DE REDENCIÓN E INSTRUCCIONES) -->
+        <!-- 5. CONVENIOS Y RECOMPENSAS -->
         <section id="screen-rewards" class="hidden space-y-4">
             <div>
-                <h3 class="font-bold text-gray-800 text-sm">Convenios EcoBonus 🛒</h3>
+                <h3 class="font-bold text-gray-800 text-sm">Convenios Eco-Bonus 🛒</h3>
                 <p class="text-[11px] text-gray-500">Redime tus puntos acumulados por beneficios reales en tiendas y servicios aliados.</p>
             </div>
 
@@ -440,10 +450,10 @@
 
                     <div class="bg-gray-50 p-2.5 rounded-xl border border-gray-200 text-[11px] space-y-1 text-gray-600">
                         <p class="font-bold text-gray-800"><i class="fa-solid fa-store text-emerald-600"></i> ¿Dónde redimir o canjear?</p>
-                        <p>Recógelo en cualquier <strong>Punto Ecológico RECICLA+IA de tu Localidad</strong> o Puntos de la Alcaldía Mayor de Bogotá autorizados.</p>
+                        <p>Recógelo en cualquier <strong>Punto Ecológico Eco-Bonus de tu Localidad</strong> o Puntos de la Alcaldía Mayor de Bogotá autorizados.</p>
                     </div>
 
-                    <button onclick="redeem(100, 'Termo Reutilizable Eco', 'Puntos Ecológicos RECICLA+IA', 'Reclámalo presentando tu documento e id de cupón en la tolva central.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Termo Eco</button>
+                    <button onclick="redeem(100, 'Termo Reutilizable Eco', 'Puntos Ecológicos Eco-Bonus', 'Reclámalo presentando tu documento e id de cupón en la tolva central.')" class="w-full gradient-bg text-white font-bold py-2.5 rounded-xl text-xs shadow-md">Redimir Termo Eco</button>
                 </div>
 
                 <!-- CONVENIO 5: DESCUENTO FACTURA SERVICIOS -->
@@ -497,7 +507,7 @@
 
                     <div class="bg-gray-50 p-4 rounded-2xl border border-dashed border-emerald-400 text-center space-y-2">
                         <span class="text-[10px] text-gray-400 uppercase font-bold block">Código de Redención</span>
-                        <span id="coupon-code" class="text-xl font-black text-emerald-700 tracking-wider block">RECICLAIA-849201</span>
+                        <span id="coupon-code" class="text-xl font-black text-emerald-700 tracking-wider block">ECOBONUS-849201</span>
                         <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full inline-block">Válido por 30 Días</span>
                     </div>
 
@@ -513,13 +523,92 @@
             </div>
         </section>
 
+        <!-- 6. CERTIFICACIONES (ICA Y ENTIDADES OFICIALES) -->
+        <section id="screen-certifications" class="hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <div>
+                    <span class="bg-amber-100 text-amber-800 text-[9px] font-extrabold px-2 py-0.5 rounded-md uppercase">Aval Institucional</span>
+                    <h3 class="font-bold text-gray-800 text-sm mt-0.5">Certificaciones Oficiales ICA y Ambientales 🏅</h3>
+                </div>
+                <button onclick="showScreen('dashboard')" class="text-xs text-gray-400 font-bold">Volver al Inicio</button>
+            </div>
+
+            <p class="text-xs text-gray-600 leading-relaxed">
+                A través de <strong>Eco-Bonus</strong> y nuestras alianzas institucionales en Colombia, los productores, fincas, colegios y empresas participantes pueden realizar y avalar sus procesos de certificación ambiental.
+            </p>
+
+            <!-- TARJETA 1: ICA (INSTITUTO COLOMBIANO AGROPECUARIO) -->
+            <div class="bg-white p-4 rounded-2xl border border-amber-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-700 rounded-xl flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xs text-gray-800">Certificación ICA en Buenas Prácticas Agrícolas (BPA)</h4>
+                        <span class="text-[10px] text-emerald-600 font-extrabold">Bajo la Res. ICA 082394</span>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50/60 p-3 rounded-xl border border-amber-100 text-xs text-gray-600 space-y-2">
+                    <p><strong>¿Qué certifica el ICA?</strong></p>
+                    <p>El Instituto Colombiano Agropecuario (ICA) otorga el sello oficial de <strong>Buenas Prácticas Agrícolas y Producción Inocua</strong> a predios que utilizan bioabonos y abono orgánico certificado derivado del reciclaje de residuos orgánicos (caneca verde).</p>
+                    
+                    <ul class="list-disc list-inside space-y-1 text-[11px] text-gray-700 pt-1">
+                        <td>Garantiza que el abono o compost no contenga patógenos ni metales pesados.</td>
+                        <td>Incentiva la transición hacia insumos orgánicos y sostenibilidad en el campo.</td>
+                        <td>Permite comercializar alimentos inocuos y abre puertas a mercados de exportación (GlobalG.A.P).</td>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 p-2.5 rounded-xl border text-[11px] space-y-1">
+                    <span class="font-bold text-gray-800 block">📋 Requisitos Principales:</span>
+                    <p>1. Solicitud escrita (Forma ICA 3-189) a la Gerencia Seccional correspondiente.</p>
+                    <p>2. Certificado de uso de suelo y planos del predio.</p>
+                    <p>3. Registros de origen del material compostado y asistencia técnica agrónoma.</p>
+                </div>
+
+                <a href="https://www.ica.gov.co" target="_blank" class="block w-full text-center bg-amber-500 hover:bg-amber-600 text-white font-extrabold py-2.5 rounded-xl text-xs shadow-md transition">
+                    🌐 Visitar Portal Oficial del ICA (ica.gov.co)
+                </a>
+            </div>
+
+            <!-- TARJETA 2: MINISTERIO DE AMBIENTE / CAR / SECRETARÍA DE AMBIENTE -->
+            <div class="bg-white p-4 rounded-2xl border border-emerald-200 shadow-sm space-y-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-leaf"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xs text-gray-800">Sello Verde de Economía Circular y CAR</h4>
+                        <span class="text-[10px] text-emerald-600 font-extrabold">MinAmbiente & Secretarías Ambientales</span>
+                    </div>
+                </div>
+
+                <p class="text-xs text-gray-600 leading-relaxed">
+                    Las empresas, establecimientos comerciales y establecimientos educativos registradas en Eco-Bonus pueden solicitar el aval de <strong>Negocio Verde</strong> y obtener certificados de disposición final sustentable para descontar impuestos o cumplir la Ley de Plásticos de Un Solo Uso (Ley 2232).
+                </p>
+
+                <div class="grid grid-cols-2 gap-2 text-center text-[11px]">
+                    <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                        <span class="font-bold text-emerald-800 block">🏢 Empresas</span>
+                        Certificado de Huella de Carbono y Cero Residuos.
+                    </div>
+                    <div class="bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                        <span class="font-bold text-emerald-800 block">🏫 Colegios</span>
+                        Acreditación en Proyectos PRAE Ambiental.
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
     </main>
 
-    <!-- TAB BAR DE NAVEGACIÓN -->
+    <!-- TAB BAR DE NAVEGACIÓN INFERIOR -->
     <nav id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto bg-white border-t p-2 flex justify-around text-xs text-gray-400 z-50">
         <button onclick="showScreen('dashboard')" id="nav-dashboard" class="flex flex-col items-center">
             <i class="fa-solid fa-house text-base"></i>
-            <span class="text-[10px] font-bold mt-0.5">Inicio / Aprender</span>
+            <span class="text-[10px] font-bold mt-0.5">Inicio</span>
         </button>
         <button onclick="showScreen('scanner')" id="nav-scanner" class="flex flex-col items-center">
             <i class="fa-solid fa-qrcode text-base"></i>
@@ -528,6 +617,10 @@
         <button onclick="showScreen('rewards')" id="nav-rewards" class="flex flex-col items-center">
             <i class="fa-solid fa-store text-base"></i>
             <span class="text-[10px] font-bold mt-0.5">Convenios</span>
+        </button>
+        <button onclick="showScreen('certifications')" id="nav-certifications" class="flex flex-col items-center">
+            <i class="fa-solid fa-award text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Certificar ICA</span>
         </button>
     </nav>
 
@@ -562,7 +655,7 @@
     let html5QrCode = null;
 
     function showScreen(id) {
-        ['login', 'register', 'dashboard', 'scanner', 'rewards'].forEach(s => {
+        ['login', 'register', 'dashboard', 'scanner', 'rewards', 'certifications'].forEach(s => {
             const el = document.getElementById(`screen-${s}`);
             if(el) el.classList.add('hidden');
         });
@@ -574,7 +667,7 @@
         document.getElementById('main-header').classList.toggle('hidden', isAuth);
         document.getElementById('bottom-nav').classList.toggle('hidden', isAuth);
 
-        const navItems = ['dashboard', 'scanner', 'rewards'];
+        const navItems = ['dashboard', 'scanner', 'rewards', 'certifications'];
         navItems.forEach(item => {
             const btn = document.getElementById(`nav-${item}`);
             if (btn) {
@@ -625,7 +718,7 @@
                 alert("❌ Contraseña incorrecta. Revisa e inténtalo de nuevo.");
             }
         } else {
-            alert("⚠️ Este correo no está registrado en RECICLA+IA.");
+            alert("⚠️ Este correo no está registrado en Eco-Bonus.");
         }
     }
 
@@ -658,7 +751,7 @@
         currentUserEmail = email;
         localStorage.setItem('ecobonus_active_session', email);
 
-        alert(`🎉 ¡Bienvenido a RECICLA+IA!\n\nCuenta registrada como [${userType}] en la localidad de ${location.toUpperCase()}.\nTe obsequiamos +100 puntos de bienvenida.`);
+        alert(`🎉 ¡Bienvenido a Eco-Bonus!\n\nCuenta registrada como [${userType}] en la localidad de ${location.toUpperCase()}.\nTe obsequiamos +100 puntos de bienvenida.`);
         showScreen('dashboard');
     }
 
@@ -722,7 +815,7 @@
         user.points += pts;
         saveUsersDB(db);
         
-        alert(`♻️ ¡DEPÓSITO REGISTRADO EN RECICLA+IA!\n\nEntidad: ${user.name}\nLocalidad: ${user.location.toUpperCase()}\nMaterial: ${mat.toUpperCase()}\nPeso añadido: ${weight} Kg\nPuntos abonados: +${pts} pts`);
+        alert(`♻️ ¡DEPÓSITO REGISTRADO EN ECO-BONUS!\n\nEntidad: ${user.name}\nLocalidad: ${user.location.toUpperCase()}\nMaterial: ${mat.toUpperCase()}\nPeso añadido: ${weight} Kg\nPuntos abonados: +${pts} pts`);
         showScreen('dashboard');
     }
 
@@ -736,7 +829,7 @@
             saveUsersDB(db);
             updateUI();
 
-            const randomCode = 'RECICLAIA-' + Math.floor(100000 + Math.random() * 900000);
+            const randomCode = 'ECOBONUS-' + Math.floor(100000 + Math.random() * 900000);
             document.getElementById('coupon-title').innerText = title;
             document.getElementById('coupon-code').innerText = randomCode;
             document.getElementById('coupon-store').innerText = storeName;
@@ -744,7 +837,7 @@
 
             document.getElementById('reward-coupon-modal').classList.remove('hidden');
         } else {
-            alert(`⚠️ Puntos insuficientes en tu cuenta RECICLA+IA. Necesitas ${cost} pts.`);
+            alert(`⚠️ Puntos insuficientes en tu cuenta Eco-Bonus. Necesitas ${cost} pts.`);
         }
     }
 
@@ -752,7 +845,7 @@
         document.getElementById('reward-coupon-modal').classList.add('hidden');
     }
 
-    /* MOTOR DE IA EXPERTA EN TODO TEMA DE RECICLAJE */
+    /* MOTOR DE IA EXPERTA EN TODO TEMA DE RECICLAJE Y CERTIFICACIÓN */
     function sendChatMessage() {
         const inputEl = document.getElementById('chat-input');
         const text = inputEl.value.trim();
@@ -789,121 +882,37 @@
     function generateComprehensiveAIResponse(prompt) {
         const q = prompt.toLowerCase();
 
+        // CONOCIMIENTO SOBRE EL ICA Y CERTIFICACIÓN
+        if (q.includes('ica') || q.includes('certifica') || q.includes('buenas practicas') || q.includes('bpa') || q.includes('predio') || q.includes('agropecuario')) {
+            return "🏅 <strong>Certificación ICA en Buenas Prácticas Agrícolas (BPA):</strong><br><br>El ICA certifica predios agrícolas que producen alimentos sanos e inocuos mediante el uso de abonos orgánicos compostados derivados del reciclaje.<br><br><strong>Pasos para certificar tu predio/proyecto:</strong><br>1. Radicar la solicitud <i>Forma ICA 3-189</i> en la gerencia seccional o Ventanilla Única.<br>2. Anexar plano del predio, uso de suelo y acreditación de asistencia técnica agrónoma.<br>3. Demostrar que los insumos orgánicos compostados cumplen con estándares de inocuidad sin contaminación biológica.";
+        }
+
         // 1. ¿QUÉ ES RECICLAR? Y CONCEPTOS BÁSICOS
         if (q.includes('que es reciclar') || q.includes('qué es reciclar') || q.includes('definicion de reciclaje') || q.includes('concepto de reciclaje') || q.includes('que significa reciclar')) {
             return "♻️ <strong>¿Qué es reciclar?</strong><br>Es el proceso de recolectar, transformar y reincorporar residuos en nuevos ciclos de fabricación como materia prima.<br><br><strong>¿Por qué es vital?</strong><br>• Reduce la extracción de recursos naturales.<br>• Disminuye el consumo de energía y agua.<br>• Alarga la vida útil de los rellenos sanitarios (como Doña Juana).<br>• Genera empleo e ingresos para los recicladores de oficio.";
         }
 
-        // 2. ¿DÓNDE RECICLAR? (Ubicaciones, Bogotá, Colombia, Básculas)
+        // 2. ¿DÓNDE RECICLAR?
         if (q.includes('donde reciclar') || q.includes('dónde reciclar') || q.includes('donde llevo') || q.includes('puntos de reciclaje') || q.includes('puntos limpios') || q.includes('donde entregar')) {
-            return "📍 <strong>¿Dónde reciclar?</strong><br><br>1. <strong>Básculas RECICLA+IA:</strong> Escanea el código QR en las tolvas de tu localidad para acumular puntos EcoBonus.<br>2. <strong>Ruta de Reciclaje de tu Barrio:</strong> Entrega tus residuos aprovechables limpios en <strong>Bolsa Blanca</strong> a los recicladores de oficio registrados.<br>3. <strong>ECA (Estaciones de Clasificación):</strong> Centros autorizados de recolección.<br>4. <strong>Puntos Posconsumo:</strong> Centros comerciales y supermercados (Éxito, Jumbo, Alkosto) para pilas, medicamentos, electrónicos y bombillos.";
+            return "📍 <strong>¿Dónde reciclar?</strong><br><br>1. <strong>Básculas Eco-Bonus:</strong> Escanea el código QR en las tolvas de tu localidad para acumular puntos Eco-Bonus.<br>2. <strong>Ruta de Reciclaje de tu Barrio:</strong> Entrega tus residuos aprovechables limpios en <strong>Bolsa Blanca</strong> a los recicladores de oficio registrados.<br>3. <strong>ECA (Estaciones de Clasificación):</strong> Centros autorizados de recolección.<br>4. <strong>Puntos Posconsumo:</strong> Centros comerciales y supermercados para pilas, medicamentos, electrónicos y bombillos.";
         }
 
-        // 3. ¿CÓMO RECICLAR? (Pasos generales)
+        // 3. ¿CÓMO RECICLAR?
         if (q.includes('como reciclar') || q.includes('cómo reciclar') || q.includes('pasos para reciclar') || q.includes('como separar')) {
-            return "📝 <strong>Pasos para reciclar correctamente:</strong><br><br>1. <strong>Limpia y Seca:</strong> Enjuaga las botellas o latas. Los residuos húmedos o con comida arruinan el cartón o papel reciclable.<br>2. <strong>Aplastá y Reduce Espacio:</strong> Comprime botellas PET y desarma cajas.<br>3. <strong>Clasifica según el Código de Colores:</strong><br>• ⚪ <strong>Blanca:</strong> Reciclables limpios.<br>• 🟢 <strong>Verde:</strong> Orgánicos.<br>• ⚫ <strong>Negra:</strong> No aprovechables.";
+            return "📝 <strong>Pasos para reciclar correctamente:</strong><br><br>1. <strong>Limpia y Seca:</strong> Enjuaga las botellas o latas.<br>2. <strong>Aplastá y Reduce Espacio:</strong> Comprime botellas PET y desarma cajas.<br>3. <strong>Clasifica según el Código de Colores:</strong><br>• ⚪ <strong>Blanca:</strong> Reciclables limpios.<br>• 🟢 <strong>Verde:</strong> Orgánicos.<br>• ⚫ <strong>Negra:</strong> No aprovechables.";
         }
 
-        // 4. TETRA PAK / AVAL / ENVASE MULTICAPA
+        // 4. TETRA PAK
         if (q.includes('tetra') || q.includes('tetrapak') || q.includes('caja de leche') || q.includes('caja de jugo')) {
             return "🧃 <strong>Reciclaje de Tetra Pak:</strong><br>El Tetra Pak está compuesto por cartón (75%), plástico (20%) y aluminio (5%).<br><br><strong>¿Cómo reciclarlo?</strong><br>1. Despliega las pestañas de las esquinas.<br>2. Aplástalo para escurrir todo el líquido sobrante.<br>3. Ponle la tapa si la tiene y deposítalo en la <strong>Bolsa/Caneca Blanca</strong>.";
         }
 
-        // 5. VIDRIO Y FRASCOS
-        if (q.includes('vidrio') || q.includes('botella de vidrio') || q.includes('frasco')) {
-            return "🍾 <strong>Reciclaje de Vidrio:</strong><br>El vidrio es 100% reciclable e infinitas veces sin perder calidad.<br><br>• Va en la <strong>Bolsa Blanca</strong> totalmente enjuagado.<br>• ⚠️ <strong>Vidrio Roto/Espejos/Platos de cerámica:</strong> No van igual. Envuélvelos en papel o cartón grueso, márcalos con una cinta y colócalos en la bolsa negra para proteger la salud de los recicladores.";
-        }
-
-        // 6. METALES / LATAS / ALUMINIO
-        if (q.includes('lata') || q.includes('aluminio') || q.includes('metal') || q.includes('cobre') || q.includes('atun') || q.includes('atún')) {
-            return "🥫 <strong>Latas y Metales:</strong><br>• Latas de gaseosa/cerveza (aluminio) y latas de atún/conservas (hojalata) van en la <strong>Bolsa Blanca</strong>.<br>• Lávalas brevemente para evitar malos olores y plagas.";
-        }
-
-        // 7. PLÁSTICOS (PET, HDPE, Bolsas)
-        if (q.includes('plastico') || q.includes('plástico') || q.includes('pet') || q.includes('bolsa de plastico')) {
-            return "🥤 <strong>Plásticos (PET, HDPE, LDPE):</strong><br>• Botellas de agua/gaseosa (PET) y envases de champú o detergente (HDPE) van en la <strong>Bolsa Blanca</strong>.<br>• Las bolsas plásticas limpias y secas se pueden reciclar o usar para hacer 'Botellas de Amor' (eco-ladrillos).";
-        }
-
-        // 8. PAPEL Y CARTÓN
-        if (q.includes('papel') || q.includes('carton') || q.includes('cartón') || q.includes('periódico') || q.includes('periodico') || q.includes('cuaderno')) {
-            return "📦 <strong>Papel y Cartón:</strong><br>• Cajas, periódicos, revistas, folletos y cuadernos sin espiral metálico van en la <strong>Bolsa Blanca</strong>.<br>• ⚠️ <strong>OJO:</strong> Servilletas usadas, papel higiénico, papel plastificado, térmico (facturas) o cartón sucio con grasa de pizza van a la <strong>Bolsa Negra</strong>.";
-        }
-
-        // 9. MITOS DEL RECICLAJE
-        if (q.includes('mito') || q.includes('falso') || q.includes('mentira') || q.includes('verdad')) {
-            return "💡 <strong>Mitos comunes del reciclaje:</strong><br><br>❌ <i>'Todo se junta en el camión de basura':</i> <strong>FALSO.</strong> Los camiones de reciclaje o recicladores de oficio solo recogen la bolsa blanca.<br>❌ <i>'Hay que lavar las cosas con jabón':</i> <strong>FALSO.</strong> Basta con escurrir o enjuagar con poca agua sobrante.<br>❌ <i>'El icopor se recicla siempre':</i> <strong>FALSO.</strong> Solo el icopor industrial limpio tiene proceso; el de comida va a la bolsa negra.";
-        }
-
-        // 10. LEYES Y DERECHOS / PLÁSTICOS DE UN SOLO USO
-        if (q.includes('ley') || q.includes('norma') || q.includes('prohibic') || q.includes('un solo uso') || q.includes('resolucion 2184')) {
-            return "⚖️ <strong>Legislación Ambiental en Colombia:</strong><br><br>• <strong>Resolución 2184 de 2019:</strong> Estableció el código unificado de colores (Blanco, Verde, Negro).<br>• <strong>Ley de Plásticos de Un Solo Uso (Ley 2232):</strong> Prohíbe gradualmente plásticos como pitillos, mezcladores, soportes de bombas, cubiertos desechables y bolsas de embalaje.";
-        }
-
-        // 11. BOMBILLOS E ILUMINACIÓN
-        if (q.includes('bombill') || q.includes('fluorescente') || q.includes('led') || q.includes('foco') || q.includes('lampara') || q.includes('lámpara')) {
-            return "💡 <strong>Bombillos y Tubos Fluorescentes:</strong><br>Son considerados residuos posconsumo con mercurio y componentes metálicos.<br><br>• Llévalos a los contenedores de <i>Lumina</i> en supermercados y centros comerciales.<br>• ⚠️ ¡Nunca los tires en bolsas ordinarias ni los rompas!";
-        }
-
-        // 12. ELECTRÓNICOS (RAEE)
-        if (q.includes('celular') || q.includes('computador') || q.includes('laptop') || q.includes('pantalla') || q.includes('teclado') || q.includes('electrodomestico') || q.includes('cable') || q.includes('cargador') || q.includes('televisor') || q.includes('raee')) {
-            return "💻 <strong>Residuos Electrónicos (RAEE):</strong><br>Contienen metales valiosos (cobre, oro) y metales pesados.<br><br>• Deposítalos en los Puntos Limpios de <i>EcoCómputo</i> o en jornadas especiales de la Secretaría de Ambiente.";
-        }
-
-        // 13. PILAS Y BATERÍAS
-        if (q.includes('pila') || q.includes('bateria') || q.includes('batería') || q.includes('acumulador')) {
-            return "🔋 <strong>Pilas y Baterías Usadas:</strong><br>Altamente contaminantes por sus compuestos de cadmio y litio.<br><br>• Llévalas a los contenedores del programa <i>Recopila</i> en portales de TransMilenio y supermercados.";
-        }
-
-        // 14. LLANTAS
-        if (q.includes('llanta') || q.includes('neumatico') || q.includes('neumático') || q.includes('caucho')) {
-            return "🛞 <strong>Llantas Usadas:</strong><br>• Entrega tus llantas en puntos del programa <i>Rueda Verde</i> o centros de servicio automotriz autorizados.<br>• Se trituran para fabricar asfalto ecológico y parques infantiles.";
-        }
-
-        // 15. ROPA / TEXTILES
-        if (q.includes('ropa') || q.includes('textil') || q.includes('tela') || q.includes('zapato') || q.includes('prenda')) {
-            return "👕 <strong>Ropa y Textiles:</strong><br>• Si está usable: Dónala a programas comunitarios o mercados de segunda mano.<br>• Si está dañada o rota: Va a la <strong>Bolsa Negra</strong> o a contenedores de moda circular.";
-        }
-
-        // 16. ICOPOR
-        if (q.includes('icopor') || q.includes('poliestireno')) {
-            return "📦 <strong>Icopor (Polietileno expandido):</strong><br>• Si se usó con alimentos (sucio): Va a la <strong>Bolsa Negra</strong>.<br>• Si es empaque limpio de aparatos nuevos: Va a la <strong>Bolsa Blanca</strong>.";
-        }
-
-        // 17. ACEITES
-        if (q.includes('aceite')) {
-            return "🛢️ <strong>Aceites Usados:</strong><br>• <strong>Cocina:</strong> Déjalo enfriar, fíltralo y embólsalo en una botella PET. Llévalo a puntos limpios para biodiésel.<br>• <strong>Motor:</strong> Entrégalo en talleres autorizados de cambio de aceite.";
-        }
-
-        // 18. MEDICAMENTOS
-        if (q.includes('medicina') || q.includes('pastilla') || q.includes('medicamento') || q.includes('jarabe') || q.includes('jeringa')) {
-            return "💊 <strong>Medicamentos Vencidos:</strong><br>• Llévalos a los contenedores de <i>Punto Azul</i> en droguerías y farmacias.<br>• 💉 <strong>Jeringas usadas:</strong> Guárdalas en un bote plástico rígido y entrégalas como residuo hospitalario.";
-        }
-
-        // 19. COMPOST / ORGÁNICOS
-        if (q.includes('compost') || q.includes('abono') || q.includes('organico') || q.includes('orgánico') || q.includes('comida') || q.includes('cascara') || q.includes('cáscara')) {
-            return "🌱 <strong>Residuos Orgánicos:</strong><br>• Van en la <strong>Bolsa Verde</strong>.<br>• Incluyen cáscaras de frutas/verduras, borra de café y hojas de jardín. Al degradarse producen abono agrícola.";
-        }
-
-        // 20. CÓDIGO DE COLORES
-        if (q.includes('colores') || q.includes('caneca') || q.includes('bolsa') || q.includes('blanca') || q.includes('verde') || q.includes('negra')) {
-            return "🎨 <strong>Código de Colores Oficial (Resolución 2184):</strong><br><br>• <strong>⚪ Bolsa Blanca:</strong> Reciclables limpios (plástico, vidrio, papel, cartón, metal).<br>• <strong>🟢 Bolsa Verde:</strong> Orgánicos aprovechables (restos de comida, cáscaras).<br>• <strong>⚫ Bolsa Negra:</strong> No aprovechables (servilletas usadas, papel higiénico, pañales).";
-        }
-
-        // 21. ECONOMÍA CIRCULAR / BENEFICIOS
-        if (q.includes('economia circular') || q.includes('economía circular')) {
-            return "🌐 <strong>Economía Circular:</strong> Es el modelo sostenible enfocado en reducir, reutilizar y reciclar materiales para mantenerlos en uso la mayor cantidad de tiempo posible y evitar la producción de basura.";
-        }
-
-        if (q.includes('3r') || q.includes('tres r') || q.includes('reducir')) {
-            return "🔄 <strong>Las 3 Erres:</strong><br>1. <strong>Reducir:</strong> Generar menos desperdicio.<br>2. <strong>Reutilizar:</strong> Dar un nuevo uso a objetos viejos.<br>3. <strong>Reciclar:</strong> Transformar industrialmente los materiales en nuevos productos.";
-        }
-
-        // RESPUESTA INTELIGENTE GENERADA AUTOMÁTICAMENTE PARA CUALQUIER OTRA CONSULTA
-        return `🤖 <strong>Asistente IA RECICLA+IA sobre "${prompt}":</strong><br><br>` +
+        // RESPUESTA GENERAL
+        return `🤖 <strong>Asistente IA Eco-Bonus sobre "${prompt}":</strong><br><br>` +
                `Para gestionar correctamente este elemento en Colombia:<br>` +
-               `1. <strong>Limpio y Seco:</strong> Si es de plástico, cartón, metal o vidrio limpio, deposítalo en la <strong>Bolsa Blanca (Aprovechable)</strong>.<br>` +
-               `2. <strong>Contaminado o Sucio:</strong> Si contiene restos de comida, grasas o fluidos, va a la <strong>Bolsa Negra (No Aprovechable)</strong>.<br>` +
-               `3. <strong>Residuo Especial/Peligroso:</strong> Si contiene componentes químicos, electrónicos o biológicos, llévalo a un Punto Posconsumo autorizado de tu localidad. 🌿`;
+               `1. <strong>Limpio y Seco:</strong> Deposítalo en la <strong>Bolsa Blanca (Aprovechable)</strong>.<br>` +
+               `2. <strong>Contaminado o Sucio:</strong> Va a la <strong>Bolsa Negra (No Aprovechable)</strong>.<br>` +
+               `3. <strong>Residuos Agrícolas / Orgánicos:</strong> Deposítalos en la <strong>Bolsa Verde</strong> para convertirlos en abono y aplicar a certificar en el ICA. 🌿`;
     }
 
     // Inicializar app mostrando login si no hay sesión
