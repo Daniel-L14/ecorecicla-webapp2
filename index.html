@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>EcoBonus App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Librería de lector de código QR por cámara -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f3f4f6; -webkit-tap-highlight-color: transparent; }
+        .app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; background: #ffffff; position: relative; }
+        .gradient-bg { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        #reader video { width: 100% !important; border-radius: 1rem; object-fit: cover; }
+    </style>
+</head>
+<body class="bg-gray-100 antialiased">
+
+<div class="app-container flex flex-col justify-between min-h-screen shadow-lg">
+
+    <!-- HEADER -->
+    <header id="main-header" class="hidden gradient-bg text-white p-5 rounded-b-3xl shadow-lg">
+        <div class="flex justify-between items-center mb-3">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white text-emerald-600 rounded-full flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div>
+                    <p class="text-xs text-emerald-100">Hola de nuevo,</p>
+                    <h2 id="disp-username" class="text-base font-bold">Usuario EcoBonus</h2>
+                </div>
+            </div>
+            <button onclick="logout()" class="text-white text-sm bg-emerald-700/50 p-2 rounded-full"><i class="fa-solid fa-right-from-bracket"></i></button>
+        </div>
+        
+        <!-- LOCALIDAD REGISTRADA -->
+        <div class="flex items-center justify-between text-xs bg-emerald-800/40 px-3 py-1.5 rounded-xl mb-3 border border-white/10">
+            <span class="text-emerald-100"><i class="fa-solid fa-location-dot text-yellow-300"></i> Tu Localidad Registrada:</span>
+            <span id="disp-location" class="font-bold text-white uppercase">Fontibón</span>
+        </div>
+
+        <div class="bg-white/10 p-3 rounded-2xl text-center border border-white/20">
+            <span class="text-xs text-emerald-100">MIS PUNTOS ECOBONUS</span>
+            <div class="flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-coins text-yellow-300 text-xl"></i>
+                <span id="disp-points" class="text-2xl font-black">250</span>
+                <span class="text-xs">pts</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="flex-1 p-5 overflow-y-auto pb-24">
+
+        <!-- 1. LOGIN -->
+        <section id="screen-login" class="flex flex-col justify-center min-h-[80vh] space-y-4">
+            <div class="text-center">
+                <i class="fa-solid fa-leaf text-5xl text-emerald-500 mb-2"></i>
+                <h1 class="text-3xl font-extrabold text-gray-800">EcoBonus</h1>
+                <p class="text-xs text-gray-500">Recicla en tu localidad y gana beneficios</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Correo Electrónico</label>
+                    <input type="email" id="login-email" value="demo@ecobonus.com" class="w-full p-3 bg-gray-50 border rounded-xl text-xs focus:outline-none focus:border-emerald-500" placeholder="Correo electrónico">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Contraseña</label>
+                    <input type="password" id="login-pass" value="123456" class="w-full p-3 bg-gray-50 border rounded-xl text-xs focus:outline-none focus:border-emerald-500" placeholder="Contraseña">
+                </div>
+                <button onclick="login()" class="w-full gradient-bg text-white font-bold py-3 rounded-xl text-xs shadow-md">Ingresar a mi Cuenta</button>
+            </div>
+            <p class="text-center text-xs text-gray-500">¿Aún no tienes cuenta? <button onclick="showScreen('register')" class="text-emerald-600 font-bold underline">Regístrate aquí</button></p>
+        </section>
+
+        <!-- 2. REGISTRO -->
+        <section id="screen-register" class="hidden min-h-[80vh] flex flex-col justify-center space-y-4">
+            <div class="text-center">
+                <h2 class="text-xl font-bold text-gray-800">Registro EcoBonus</h2>
+                <p class="text-xs text-gray-500">Regístrate para habilitar los contenedores de tu zona</p>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border space-y-3 shadow-sm">
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Nombre Completo</label>
+                    <input type="text" id="reg-name" placeholder="Ej: Maria Gonzalez" class="w-full p-3 bg-gray-50 border rounded-xl text-xs">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Localidad de Residencia</label>
+                    <select id="reg-location" class="w-full p-3 bg-gray-50 border rounded-xl text-xs font-bold text-gray-700">
+                        <option value="fontibon">Fontibón</option>
+                        <option value="bosa">Bosa</option>
+                        <option value="suba">Suba</option>
+                        <option value="usaquen">Usaquén</option>
+                        <option value="chapinero">Chapinero</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Correo Electrónico</label>
+                    <input type="email" id="reg-email" placeholder="correo@ejemplo.com" class="w-full p-3 bg-gray-50 border rounded-xl text-xs">
+                </div>
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">Crea una Contraseña</label>
+                    <input type="password" id="reg-pass" placeholder="••••••••" class="w-full p-3 bg-gray-50 border rounded-xl text-xs">
+                </div>
+                <button onclick="register()" class="w-full gradient-bg text-white font-bold py-3 rounded-xl text-xs shadow-md">Crear Cuenta (+100 EcoBonus)</button>
+            </div>
+            <p class="text-center text-xs text-gray-500"><button onclick="showScreen('login')" class="text-emerald-600 font-bold underline">Volver al Login</button></p>
+        </section>
+
+        <!-- 3. DASHBOARD -->
+        <section id="screen-dashboard" class="hidden space-y-5">
+            <h3 class="font-bold text-gray-800 text-sm">Tus Métricas de Reciclaje</h3>
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-white p-3 rounded-xl border">
+                    <span class="text-xs text-gray-400 font-bold block">🥤 Plástico</span>
+                    <span id="stat-plastico" class="font-extrabold text-sm text-gray-800">12.5 Kg</span>
+                </div>
+                <div class="bg-white p-3 rounded-xl border">
+                    <span class="text-xs text-gray-400 font-bold block">📦 Cartón</span>
+                    <span id="stat-carton" class="font-extrabold text-sm text-gray-800">7.5 Kg</span>
+                </div>
+                <div class="bg-white p-3 rounded-xl border">
+                    <span class="text-xs text-gray-400 font-bold block">🍎 Orgánico</span>
+                    <span id="stat-organico" class="font-extrabold text-sm text-gray-800">5.0 Kg</span>
+                </div>
+            </div>
+
+            <div class="gradient-bg text-white p-5 rounded-2xl text-center space-y-2 shadow-md">
+                <h4 class="font-bold">¿Tienes material para reciclar?</h4>
+                <p class="text-xs text-emerald-100">Acércate al contenedor de tu localidad y escanea su código QR con la cámara.</p>
+                <button onclick="showScreen('scanner')" class="bg-white text-emerald-700 font-bold px-4 py-2.5 rounded-xl text-xs mt-2 shadow">📷 Escanear QR en Báscula</button>
+            </div>
+        </section>
+
+        <!-- 4. ESCÁNER DE CÁMARA Y VALIDACIÓN GEOGRÁFICA -->
+        <section id="screen-scanner" class="hidden space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="font-bold text-gray-800 text-sm">Escáner de Contenedor IoT</h3>
+                <button onclick="showScreen('dashboard')" class="text-xs text-gray-400 font-bold">Cancelar</button>
+            </div>
+            
+            <p class="text-xs text-gray-500">Enfoca el código QR del contenedor para verificar que pertenezca a tu localidad registrada.</p>
+
+            <!-- VISOR DE CÁMARA -->
+            <div class="bg-black rounded-2xl p-2 shadow-inner">
+                <div id="reader" class="rounded-xl overflow-hidden min-h-[220px]"></div>
+            </div>
+
+            <!-- SIMULADOR DE CÓDIGOS QR LOCALES -->
+            <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200 space-y-2 text-xs">
+                <span class="font-bold text-emerald-800 block">Probar Validación de QR en Vivo:</span>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="processScannedQR('fontibon')" class="bg-white border p-2 rounded-lg font-bold text-emerald-700">📍 QR de Fontibón</button>
+                    <button onclick="processScannedQR('bosa')" class="bg-white border p-2 rounded-lg font-bold text-red-600">📍 QR de Bosa</button>
+                    <button onclick="processScannedQR('suba')" class="bg-white border p-2 rounded-lg font-bold text-blue-600">📍 QR de Suba</button>
+                    <button onclick="processScannedQR('usaquen')" class="bg-white border p-2 rounded-lg font-bold text-purple-600">📍 QR de Usaquén</button>
+                </div>
+            </div>
+
+            <!-- MODAL DE BÁSCULA -->
+            <div id="recycle-modal" class="hidden bg-emerald-50 p-4 rounded-2xl border border-emerald-300 space-y-3 shadow-lg">
+                <div class="bg-emerald-100/70 p-3 rounded-xl border border-emerald-300">
+                    <span class="text-emerald-900 font-extrabold text-xs block"><i class="fa-solid fa-circle-check text-emerald-600"></i> ¡Contenedor Validado Correctamente!</span>
+                    <p id="modal-valid-text" class="text-[11px] text-emerald-800 mt-0.5">Punto Ecológico Autorizado para residentes de tu sector.</p>
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">1. Selecciona el Tipo de Material:</label>
+                    <select id="modal-material" class="w-full bg-white border border-gray-300 rounded-xl p-2.5 text-xs font-bold focus:outline-none">
+                        <option value="plastico">🥤 Plástico (Botellas, envases, bolsas)</option>
+                        <option value="carton">📦 Cartón y Papel</option>
+                        <option value="organico">🍎 Residuos Orgánicos</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-bold text-gray-600 block mb-1">2. Peso Registrado por la Báscula (Kg):</label>
+                    <input type="number" id="modal-weight" value="100" min="0.1" step="0.5" class="w-full bg-white border border-gray-300 rounded-xl p-2.5 text-sm font-extrabold text-emerald-700 focus:outline-none">
+                </div>
+
+                <button onclick="confirmRecycle()" class="w-full gradient-bg text-white font-extrabold py-3 rounded-xl text-xs shadow-md">
+                     Registrar Reciclaje y Abonar Puntos EcoBonus
+                </button>
+            </div>
+
+            <!-- ALERTA DE ERROR DE LOCALIDAD -->
+            <div id="error-modal" class="hidden bg-red-50 p-4 rounded-2xl border border-red-300 space-y-2 shadow-lg">
+                <div class="flex items-center space-x-2 text-red-700 font-bold text-xs">
+                    <i class="fa-solid fa-triangle-exclamation text-base"></i>
+                    <span>¡Contenedor No Permitido!</span>
+                </div>
+                <p id="error-modal-text" class="text-xs text-red-800 leading-relaxed font-medium">
+                    Escaneaste un contenedor ubicado en BOSA. Tu localidad registrada es FONTIBÓN.
+                </p>
+                <div class="bg-white p-2.5 rounded-xl border border-red-200 text-[11px] text-gray-600">
+                    📍 <strong>Puntos de Reciclaje donde SÍ puedes depositar:</strong><br>
+                    • Punto Ecológico Central Fontibón (Cra. 100 # 18-20)<br>
+                    • Tolva Inteligente Fontibón Norte (Av. Esperanza # 103)
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. CAPACITACIÓN CON GUÍA COMPLETA DE BOLSAS Y QUIZ -->
+        <section id="screen-education" class="hidden space-y-4 text-xs">
+            <div>
+                <h3 class="font-bold text-gray-800 text-sm">Capacitación EcoBonus </h3>
+                <p class="text-[11px] text-gray-500">Guía de separación de bolsas y quiz interactivo.</p>
+            </div>
+
+            <!-- GUÍA DETALLADA DE BOLSAS / CANECAS -->
+            <div class="space-y-2.5">
+                <h4 class="font-bold text-gray-700 text-xs uppercase tracking-wider">¿Qué va en cada bolsa / caneca?</h4>
+
+                <!-- BOLSA BLANCA -->
+                <div class="bg-white p-3.5 rounded-xl border-l-4 border-l-gray-300 border border-gray-100 shadow-sm space-y-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-gray-800 text-xs">⚪ Bolsa / Caneca Blanca</span>
+                        <span class="bg-gray-100 text-gray-700 text-[9px] font-bold px-2 py-0.5 rounded-full">Residuos Aprovechables</span>
+                    </div>
+                    <p class="text-[11px] text-gray-600 leading-relaxed">
+                        <strong>¿Qué depositar?</strong> Botellas de plástico (PET), envases de champú/detergente, bolsas plásticas limpias, cajas de cartón secas, papel de oficina, periódicos, revistas, latas de aluminio, envases de vidrio y tetra pack.
+                    </p>
+                    <p class="text-[10px] text-emerald-700 font-semibold bg-emerald-50 p-1.5 rounded-lg">
+                        💡 Requisito: Los elementos deben estar limpios, secos y completamente vacíos.
+                    </p>
+                </div>
+
+                <!-- BOLSA VERDE -->
+                <div class="bg-white p-3.5 rounded-xl border-l-4 border-l-emerald-500 border border-gray-100 shadow-sm space-y-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-gray-800 text-xs">🟢 Bolsa / Caneca Verde</span>
+                        <span class="bg-emerald-100 text-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full">Orgánicos Aprovechables</span>
+                    </div>
+                    <p class="text-[11px] text-gray-600 leading-relaxed">
+                        <strong>¿Qué depositar?</strong> Cáscaras de frutas y verduras, restos de comida preparada, borra de café, bolsitas de té, cáscaras de huevo, césped cortado, hojas secas y restos de plantas de jardín.
+                    </p>
+                    <p class="text-[10px] text-emerald-700 font-semibold bg-emerald-50 p-1.5 rounded-lg">
+                        🌱 Uso: Se procesan para producir compostaje y abono orgánico.
+                    </p>
+                </div>
+
+                <!-- BOLSA NEGRA -->
+                <div class="bg-white p-3.5 rounded-xl border-l-4 border-l-gray-800 border border-gray-100 shadow-sm space-y-1">
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-gray-800 text-xs">⚫ Bolsa / Caneca Negra</span>
+                        <span class="bg-gray-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">No Aprovechables</span>
+                    </div>
+                    <p class="text-[11px] text-gray-600 leading-relaxed">
+                        <strong>¿Qué depositar?</strong> Papel higiénico, servilletas usadas, pañales, pañitos húmedos, cartones sucios con grasa/comida (ej. cajas de pizza grasosas), papeles metalizados de papas o mecato, y residuos de barrido.
+                    </p>
+                </div>
+            </div>
+
+            <!-- QUIZ INTERACTIVO SECUENCIAL (5 PREGUNTAS) -->
+            <div class="bg-amber-50 p-4 rounded-2xl border border-amber-200 space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="font-bold text-amber-800 text-xs"><i class="fa-solid fa-graduation-cap"></i> Quiz de Reciclaje</span>
+                    <span id="quiz-progress" class="text-[10px] font-bold bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full">Pregunta 1 de 5</span>
+                </div>
+
+                <div id="quiz-box" class="space-y-2">
+                    <p id="quiz-question" class="text-xs font-bold text-gray-800">¿En qué caneca debes depositar una botella de agua plástica limpia?</p>
+                    <div id="quiz-options" class="grid grid-cols-1 gap-2 pt-1"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. CONVENIOS Y RECOMPENSAS COMPLETAS -->
+        <section id="screen-rewards" class="hidden space-y-3">
+            <div>
+                <h3 class="font-bold text-gray-800 text-sm">Convenios EcoBonus 🛒</h3>
+                <p class="text-[11px] text-gray-500">Canjea tus puntos acumulados por productos y beneficios reales.</p>
+            </div>
+
+            <div class="space-y-2.5">
+                <!-- CONVENIO 1 -->
+                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Bono Mercado $20.000</h4>
+                        <p class="text-[10px] text-gray-400">Válido en Supermercados Aliados</p>
+                        <span class="text-emerald-600 font-extrabold">200 Puntos</span>
+                    </div>
+                    <button onclick="redeem(200, 'Bono Mercado $20.000')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+                </div>
+
+                <!-- CONVENIO 2 -->
+                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Bono Mercado $50.000</h4>
+                        <p class="text-[10px] text-gray-400">Para compras de canasta familiar</p>
+                        <span class="text-emerald-600 font-extrabold">450 Puntos</span>
+                    </div>
+                    <button onclick="redeem(450, 'Bono Mercado $50.000')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+                </div>
+
+                <!-- CONVENIO 3 -->
+                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Canasta Orgánica Frutas</h4>
+                        <p class="text-[10px] text-gray-400">Entrega directa de campesinos</p>
+                        <span class="text-emerald-600 font-extrabold">150 Puntos</span>
+                    </div>
+                    <button onclick="redeem(150, 'Canasta Orgánica Frutas')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+                </div>
+
+                <!-- CONVENIO 4 -->
+                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Termo Reutilizable Eco</h4>
+                        <p class="text-[10px] text-gray-400">Acero inoxidable 500ml</p>
+                        <span class="text-emerald-600 font-extrabold">100 Puntos</span>
+                    </div>
+                    <button onclick="redeem(100, 'Termo Reutilizable Eco')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+                </div>
+
+                <!-- CONVENIO 5 -->
+                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Descuento Servicios $30.000</h4>
+                        <p class="text-[10px] text-gray-400">Abono a factura de agua/luz</p>
+                        <span class="text-emerald-600 font-extrabold">300 Puntos</span>
+                    </div>
+                    <button onclick="redeem(300, 'Descuento Servicios $30.000')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+                </div>
+
+                <!-- CONVENIO 6 -->
+                <div class="bg-white p-3.5 rounded-xl border flex justify-between items-center text-xs shadow-sm">
+                    <div>
+                        <h4 class="font-bold text-gray-800">Entrada Cine 2x1 Eco</h4>
+                        <p class="text-[10px] text-gray-400">Salas de cine participantes</p>
+                        <span class="text-emerald-600 font-extrabold">80 Puntos</span>
+                    </div>
+                    <button onclick="redeem(80, 'Entrada Cine 2x1 Eco')" class="gradient-bg text-white px-3 py-2 rounded-lg font-bold">Redimir</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TAB BAR -->
+    <nav id="bottom-nav" class="hidden fixed bottom-0 left-0 right-0 max-w-[480px] mx-auto bg-white border-t p-2 flex justify-around text-xs text-gray-400 z-50">
+        <button onclick="showScreen('dashboard')" id="nav-dashboard" class="flex flex-col items-center">
+            <i class="fa-solid fa-house text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Inicio</span>
+        </button>
+        <button onclick="showScreen('scanner')" id="nav-scanner" class="flex flex-col items-center">
+            <i class="fa-solid fa-qrcode text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Escanear</span>
+        </button>
+        <button onclick="showScreen('rewards')" id="nav-rewards" class="flex flex-col items-center">
+            <i class="fa-solid fa-store text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Convenios</span>
+        </button>
+        <button onclick="showScreen('education')" id="nav-education" class="flex flex-col items-center">
+            <i class="fa-solid fa-book-open text-base"></i>
+            <span class="text-[10px] font-bold mt-0.5">Aprender</span>
+        </button>
+    </nav>
+
+</div>
+
+<script>
+    function getUsersDB() {
+        const db = localStorage.getItem('ecobonus_users_db');
+        if (db) {
+            return JSON.parse(db);
+        } else {
+            const initial = {
+                "demo@ecobonus.com": {
+                    name: "Alejandro Torres",
+                    location: "fontibon",
+                    pass: "123456",
+                    points: 250,
+                    stats: { plastico: 12.5, carton: 7.5, organico: 5.0 }
+                }
+            };
+            localStorage.setItem('ecobonus_users_db', JSON.stringify(initial));
+            return initial;
+        }
+    }
+
+    function saveUsersDB(db) {
+        localStorage.setItem('ecobonus_users_db', JSON.stringify(db));
+    }
+
+    let currentUserEmail = localStorage.getItem('ecobonus_active_session') || "demo@ecobonus.com";
+    let html5QrCode = null;
+
+    // PREGUNTAS DEL QUIZ DE APRENDIZAJE
+    const quizQuestions = [
+        {
+            q: "1. ¿En qué caneca debes depositar una botella de agua plástica vacía y limpia?",
+            options: [
+                { text: "⚪ Bolsa / Caneca Blanca", correct: true },
+                { text: "🟢 Bolsa / Caneca Verde", correct: false },
+                { text: "⚫ Bolsa / Caneca Negra", correct: false }
+            ]
+        },
+        {
+            q: "2. ¿En qué caneca van las cáscaras de frutas, verduras y restos de comida?",
+            options: [
+                { text: "⚪ Bolsa / Caneca Blanca", correct: false },
+                { text: "🟢 Bolsa / Caneca Verde", correct: true },
+                { text: "⚫ Bolsa / Caneca Negra", correct: false }
+            ]
+        },
+        {
+            q: "3. ¿Dónde debes desechar servilletas y papel higiénico usados?",
+            options: [
+                { text: "⚪ Bolsa / Caneca Blanca", correct: false },
+                { text: "🟢 Bolsa / Caneca Verde", correct: false },
+                { text: "⚫ Bolsa / Caneca Negra", correct: true }
+            ]
+        },
+        {
+            q: "4. ¿Cómo se deben entregar las cajas de cartón para reciclar?",
+            options: [
+                { text: "Mojadas y arrugadas", correct: false },
+                { text: "Limpias, secas y desarmadas", correct: true },
+                { text: "Con restos de comida adentro", correct: false }
+            ]
+        },
+        {
+            q: "5. ¿En qué caneca se depositan las latas de aluminio de gaseosas/jugos?",
+            options: [
+                { text: "⚪ Bolsa / Caneca Blanca", correct: true },
+                { text: "🟢 Bolsa / Caneca Verde", correct: false },
+                { text: "⚫ Bolsa / Caneca Negra", correct: false }
+            ]
+        }
+    ];
+
+    let currentQuizIndex = 0;
+
+    function showScreen(id) {
+        ['login', 'register', 'dashboard', 'scanner', 'education', 'rewards'].forEach(s => document.getElementById(`screen-${s}`).classList.add('hidden'));
+        document.getElementById(`screen-${id}`).classList.remove('hidden');
+        
+        const isAuth = (id === 'login' || id === 'register');
+        document.getElementById('main-header').classList.toggle('hidden', isAuth);
+        document.getElementById('bottom-nav').classList.toggle('hidden', isAuth);
+
+        const navItems = ['dashboard', 'scanner', 'rewards', 'education'];
+        navItems.forEach(item => {
+            const btn = document.getElementById(`nav-${item}`);
+            if (btn) {
+                btn.className = (item === id) ? "flex flex-col items-center text-emerald-600 font-bold" : "flex flex-col items-center text-gray-400";
+            }
+        });
+
+        document.getElementById('recycle-modal').classList.add('hidden');
+        document.getElementById('error-modal').classList.add('hidden');
+
+        if (id === 'scanner') {
+            startCamera();
+        } else {
+            stopCamera();
+        }
+
+        if (id === 'education') {
+            loadQuizQuestion();
+        }
+
+        updateUI();
+    }
+
+    function updateUI() {
+        const db = getUsersDB();
+        const user = db[currentUserEmail];
+        if (user) {
+            document.getElementById('disp-username').innerText = user.name;
+            document.getElementById('disp-location').innerText = user.location;
+            document.getElementById('disp-points').innerText = user.points;
+            document.getElementById('stat-plastico').innerText = user.stats.plastico.toFixed(1) + ' Kg';
+            document.getElementById('stat-carton').innerText = user.stats.carton.toFixed(1) + ' Kg';
+            document.getElementById('stat-organico').innerText = user.stats.organico.toFixed(1) + ' Kg';
+        }
+    }
+
+    function login() {
+        const email = document.getElementById('login-email').value.trim();
+        const pass = document.getElementById('login-pass').value;
+        const db = getUsersDB();
+
+        if (db[email]) {
+            if (db[email].pass === pass) {
+                currentUserEmail = email;
+                localStorage.setItem('ecobonus_active_session', email);
+                showScreen('dashboard');
+            } else {
+                alert("❌ Contraseña incorrecta. Revisa e inténtalo de nuevo.");
+            }
+        } else {
+            alert("⚠️ Este correo no está registrado en EcoBonus.");
+        }
+    }
+
+    function register() {
+        const name = document.getElementById('reg-name').value.trim();
+        const location = document.getElementById('reg-location').value;
+        const email = document.getElementById('reg-email').value.trim();
+        const pass = document.getElementById('reg-pass').value;
+
+        if (!name || !email || !pass) {
+            return alert("Por favor completa todos los campos del formulario.");
+        }
+
+        const db = getUsersDB();
+        if (db[email]) {
+            return alert("⚠️ Este correo ya tiene una cuenta registrada.");
+        }
+
+        db[email] = {
+            name: name,
+            location: location,
+            pass: pass,
+            points: 100,
+            stats: { plastico: 0, carton: 0, organico: 0 }
+        };
+
+        saveUsersDB(db);
+        currentUserEmail = email;
+        localStorage.setItem('ecobonus_active_session', email);
+
+        alert(`🎉 ¡Bienvenido a EcoBonus!\n\nTu usuario fue registrado en la localidad de ${location.toUpperCase()}.\nTe obsequiamos +100 puntos de bienvenida.`);
+        showScreen('dashboard');
+    }
+
+    function logout() {
+        localStorage.removeItem('ecobonus_active_session');
+        showScreen('login');
+    }
+
+    function startCamera() {
+        if (!html5QrCode) {
+            html5QrCode = new Html5Qrcode("reader");
+        }
+        
+        const config = { fps: 10, qrbox: { width: 220, height: 220 } };
+        
+        html5QrCode.start({ facingMode: "environment" }, config, (decodedText) => {
+            stopCamera();
+            let scannedLoc = decodedText.toLowerCase();
+            processScannedQR(scannedLoc);
+        }).catch(err => console.log("Cámara no disponible", err));
+    }
+
+    function stopCamera() {
+        if (html5QrCode && html5QrCode.isScanning) {
+            html5QrCode.stop().then(() => html5QrCode.clear()).catch(err => console.log(err));
+        }
+    }
+
+    function processScannedQR(containerLocation) {
+        document.getElementById('recycle-modal').classList.add('hidden');
+        document.getElementById('error-modal').classList.add('hidden');
+
+        const db = getUsersDB();
+        const user = db[currentUserEmail];
+        const userLoc = user.location.toLowerCase();
+
+        if (containerLocation.includes(userLoc) || userLoc.includes(containerLocation)) {
+            document.getElementById('modal-valid-text').innerText = `Contenedor certificado en ${userLoc.toUpperCase()}. Puedes realizar tu depósito.`;
+            document.getElementById('recycle-modal').classList.remove('hidden');
+        } else {
+            document.getElementById('error-modal-text').innerHTML = `
+                ⚠️ <strong>ACCESO DENEGADO AL CONTENEDOR</strong><br><br>
+                Escaneaste un contenedor de <strong>${containerLocation.toUpperCase()}</strong>, pero tu cuenta está registrada en <strong>${userLoc.toUpperCase()}</strong>.<br><br>
+                No puedes depositar aquí.
+            `;
+            document.getElementById('error-modal').classList.remove('hidden');
+        }
+    }
+
+    function confirmRecycle() {
+        const mat = document.getElementById('modal-material').value;
+        const weight = parseFloat(document.getElementById('modal-weight').value);
+
+        if(!weight || weight <= 0) return alert("Ingresa un peso válido mayor a 0 Kg");
+        
+        const pts = Math.round(weight * 10);
+        const db = getUsersDB();
+        const user = db[currentUserEmail];
+
+        user.stats[mat] += weight;
+        user.points += pts;
+        saveUsersDB(db);
+        
+        alert(`♻️ ¡DEPÓSITO REGISTRADO EN ECOBONUS!\n\nLocalidad: ${user.location.toUpperCase()}\nMaterial: ${mat.toUpperCase()}\nPeso añadido: ${weight} Kg\nPuntos abonados: +${pts} pts`);
+        showScreen('dashboard');
+    }
+
+    function redeem(cost, title) {
+        const db = getUsersDB();
+        const user = db[currentUserEmail];
+
+        if(user.points >= cost) {
+            user.points -= cost;
+            saveUsersDB(db);
+            updateUI();
+            alert(`🎉 ¡Bono Redimido Exitosamente!\n\nProducto: ${title}\nCódigo de Bono: ECOBONUS-${Math.floor(100000 + Math.random() * 900000)}`);
+        } else {
+            alert(`⚠️ Puntos insuficientes en tu cuenta EcoBonus.`);
+        }
+    }
+
+    function loadQuizQuestion() {
+        const qData = quizQuestions[currentQuizIndex];
+        document.getElementById('quiz-progress').innerText = `Pregunta ${currentQuizIndex + 1} de 5`;
+        document.getElementById('quiz-question').innerText = qData.q;
+
+        const optionsContainer = document.getElementById('quiz-options');
+        optionsContainer.innerHTML = '';
+
+        qData.options.forEach(opt => {
+            const btn = document.createElement('button');
+            btn.className = "bg-white border p-2.5 rounded-xl text-left font-semibold text-xs text-gray-700 hover:bg-emerald-50 transition";
+            btn.innerText = opt.text;
+            btn.onclick = () => handleAnswer(opt.correct);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function handleAnswer(isCorrect) {
+        if (isCorrect) {
+            alert("🎉 ¡Respuesta Correcta!");
+        } else {
+            alert("❌ Respuesta incorrecta.");
+        }
+
+        currentQuizIndex++;
+
+        if (currentQuizIndex < quizQuestions.length) {
+            loadQuizQuestion();
+        } else {
+            const db = getUsersDB();
+            const user = db[currentUserEmail];
+            user.points += 20;
+            saveUsersDB(db);
+
+            alert("🏆 ¡Completaste el Quiz EcoBonus!\n\nTe hemos abonado +20 puntos por aprender.");
+            currentQuizIndex = 0;
+            showScreen('dashboard');
+        }
+    }
+</script>
+</body>
+</html>
